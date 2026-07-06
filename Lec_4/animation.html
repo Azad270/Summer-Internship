@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        @keyframes bgchanger{
+            0%{
+                background-color: yellow;
+                top: 0px;
+                left: 0px;
+            }
+            25%{
+                background-color: red;
+                top: 0px;
+                left: 400px;
+            }
+            50%{
+                 background-color: orange;    
+                 top: 400px;
+                left: 400px;
+            }
+            75%{
+                background-color: green;
+                top: 400px;
+                left: 0px;
+            }
+            100%{
+                background-color: pink;
+                top: 0px;
+                left: 0px;
+            }
+        }
+        @keyframes move2{
+            0%{
+                left: 0px;
+                top: 0px;
+            }
+            50%{
+                left: 400px;
+                top: 0px;
+            }
+            100%{
+                left: 400px;
+                top: 200px;
+            }
+        }
+
+        @keyframes rotate{
+            from{
+                transform: rotate(0deg);
+            }to{
+                transform: rotate(360deg);
+            }
+        }
+
+        .div1{
+            height: 400px;
+            width: 400px;
+            background-color: blue;
+            position: relative;
+            /* animation-name: bgchanger ;
+            animation-duration: 5s;
+            animation-delay: 2s;
+            animation-iteration-count: infinite; */
+            /* animation: bgchanger 5s 2s infinite linear; */
+            animation: move2 5s linear forwards , rotate 2s 7s infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="div1"></div>
+    
+</body>
+</html>
