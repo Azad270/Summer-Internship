@@ -1,0 +1,104 @@
+/*GOOGLE FONT VARIABLES*/
+
+:root {
+
+    --bg-color: #020617;
+    --card-color: rgba(15, 23, 42, 0.75);
+
+    --primary: #00d9ff;
+    --primary-light: #6ee7ff;
+
+    --text: #f8fafc;
+    --text-secondary: #94a3b8;
+
+    --border: rgba(0, 217, 255, 0.25);
+
+    --success: #22c55e;
+    --danger: #ef4444;
+
+    --glow:
+        0 0 10px rgba(0,217,255,.4),
+        0 0 25px rgba(0,217,255,.25);
+    
+    --font-heading: "Orbitron", sans-serif;
+    --font-body: "Rajdhani", sans-serif;
+
+}
+
+/*RESET*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text);
+    min-height: 100vh;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+/*GLOBAL FONTS*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-family: var(--font-heading);
+}
+
+button,
+input,
+textarea,
+select{
+    font-family: var(--font-body);
+}
+
+/*LINKS*/
+
+a{
+
+    text-decoration:none;
+    color:var(--primary);
+    font-family: var(--font-body);
+
+}
+
+a:hover{
+
+    color:white;
+
+}
+
+/*BUTTON DEFAULT*/
+
+button{
+
+    font-family:inherit;
+    cursor:pointer;
+    border:none;
+
+}
+
+/*INPUT DEFAULT*/
+
+input{
+
+    font-family:inherit;
+    outline:none;
+    border:none;
+
+}
