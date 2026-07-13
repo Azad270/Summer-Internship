@@ -1,0 +1,22 @@
+.color{
+    height: 100px;
+    width: 100px;
+    border:1px solid black;
+    cursor: pointer;
+}
+
+#red{
+    background-color: rgb(236, 59, 59);
+}
+
+#blue{
+    background-color: rgb(61, 61, 240);
+}
+
+#green{
+    background-color: rgb(79, 236, 79);
+}
+
+#pink{
+    background-color: pink;
+}

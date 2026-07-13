@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/*GOOGLE FONT VARIABLES*/
+
+:root {
+
+    --bg-color: #020617;
+    --card-color: rgba(15, 23, 42, 0.75);
+
+    --primary: #00d9ff;
+    --primary-light: #6ee7ff;
+
+    --text: #f8fafc;
+    --text-secondary: #94a3b8;
+
+    --border: rgba(0, 217, 255, 0.25);
+
+    --success: #22c55e;
+    --danger: #ef4444;
+
+    --glow:
+        0 0 10px rgba(0,217,255,.4),
+        0 0 25px rgba(0,217,255,.25);
+    
+    --font-heading: "Orbitron", sans-serif;
+    --font-body: "Rajdhani", sans-serif;
+
+}
+
+/*RESET*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+.logo{
+
+    width:100%;
+    display:block;
+    text-align:center;
+    margin:0 auto 18px;
+    font-family:var(--font-heading);
+    font-size:60px;
+    font-weight:900;
+    letter-spacing:8px;
+    line-height:1;
+    text-transform:uppercase;
+    color:#00d9ff;
+    text-shadow:
+        0 0 10px #00d9ff,
+        0 0 20px #00d9ff,
+        0 0 40px rgba(0,217,255,.9),
+        0 0 80px rgba(0,217,255,.5);
+
+    animation:logoPulse 3s ease-in-out infinite;
+
+}
+
+body{
+
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text);
+    min-height: 100vh;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+
+body::before{
+
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+
+        repeating-linear-gradient(
+
+            transparent 0px,
+            transparent 3px,
+            rgba(255,255,255,.015) 4px
+
+        );
+
+    opacity:.25;
+    z-index:1;
+
+}
+
+/*GLOBAL FONTS*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-family: var(--font-heading);
+}
+
+button,
+input,
+textarea,
+select{
+    font-family: var(--font-body);
+}
+
+/*LINKS*/
+
+a{
+
+    color:var(--primary);
+    text-decoration:none;
+    position:relative;
+
+}
+
+a::after{
+
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-3px;
+    width:0;
+    height:2px;
+    background:#00d9ff;
+    transition:.35s;
+
+}
+
+a:hover::after{
+
+    width:100%;
+
+}
+
+/*BUTTON DEFAULT*/
+
+button{
+
+    font-family:inherit;
+    cursor:pointer;
+    transition:.35s;
+    border:none;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/*INPUT DEFAULT*/
+
+input{
+
+    font-family:inherit;
+    outline:none;
+    border:none;
+
+}
+
+@keyframes logoPulse{
+
+    0%,100%{
+
+        text-shadow:
+            0 0 8px #00d9ff,
+            0 0 18px #00d9ff,
+            0 0 40px rgba(0,217,255,.8);
+
+    }
+
+    50%{
+
+        text-shadow:
+            0 0 15px #00ffff,
+            0 0 35px #00ffff,
+            0 0 70px rgba(0,255,255,.9);
+
+    }
+
+}
+
+/*CUSTOM SCROLLBAR*/
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#061021;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(
+        #00d9ff,
+        #008cff
+    );
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#00ffff;
+
+}
+
+::selection{
+
+    background:#00d9ff;
+    color:#020617;
+
+}
