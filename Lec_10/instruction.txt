@@ -1,0 +1,7 @@
+step1 - > npm init -y run in terminal -> package.json
+
+step2 -> npm i express - > express installed node modules
+
+step 3 -> start script change 
+
+step 4 -> app.js create and create ap using express 

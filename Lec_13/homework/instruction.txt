@@ -1,0 +1,8 @@
+make a student.json file add a dummy data 
+then perform crud operations using express routes 
+
+// POST - add all the data of your class students
+// patch 
+// delete 
+// get all student data 
+// get particaular student data 

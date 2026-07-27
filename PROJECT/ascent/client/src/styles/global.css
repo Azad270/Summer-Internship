@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+/*GOOGLE FONT VARIABLES*/
+
+:root{
+
+    /* Backgrounds */
+
+    --bg-main:#05070E;
+    --bg-secondary:#0A1220;
+    --surface:rgba(14,20,36,.45);
+    --surface-light:rgba(18,27,48,.55);
+
+    /* Glass */
+
+    --glass-bg:rgba(10,18,30,.30);
+    --glass-bg-light:rgba(255,255,255,.025);
+
+    /* Shadows */
+
+    --glass-shadow:
+        0 18px 40px rgba(0,0,0,.45);
+
+    /* Borders */
+
+    --border:rgba(255,255,255,.05);
+    --border-active:rgba(0,217,255,.15);
+    --glass-border:rgba(255,255,255,.045);
+
+    /* Accent */
+
+    --primary:#19d8ff;
+    --primary-dark:#0d7cff;
+    --primary-soft:rgba(25,216,255,.15);
+    --accent:#19D4FF;
+    --accent-dark:#2563EB;
+
+    /* Text */
+
+    --text-primary:#F3F8FF;
+    --text-secondary:#93A8C7;
+
+    /* Radius */
+
+    --radius:24px;
+
+
+    --font-heading:"Orbitron",sans-serif;
+    --font-body:"Rajdhani",sans-serif;
+
+}
+
+/*RESET*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+.logo{
+
+    width:100%;
+    display:block;
+    text-align:center;
+    margin:0 auto 18px;
+    font-family:var(--font-heading);
+    font-size:60px;
+    font-weight:900;
+    letter-spacing:8px;
+    line-height:1;
+    text-transform:uppercase;
+    color:#00d9ff;
+    text-shadow:
+        0 0 10px #00d9ff,
+        0 0 20px #00d9ff,
+        0 0 40px rgba(0,217,255,.9),
+        0 0 80px rgba(0,217,255,.5);
+
+    animation:logoPulse 3s ease-in-out infinite;
+
+}
+
+body{
+
+    font-family: var(--font-body);
+    background: var(--bg-main);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background:
+
+        radial-gradient(circle at top left,
+        rgba(0,217,255,.12),
+        transparent 35%),
+
+        radial-gradient(circle at bottom right,
+        rgba(37,99,235,.10),
+        transparent 35%),
+
+        linear-gradient(
+            160deg,
+            #05070E,
+            #09111F,
+            #05070E
+        );
+
+
+}
+
+body::before{
+
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+
+        repeating-linear-gradient(
+
+            transparent 0px,
+            transparent 3px,
+            rgba(255,255,255,.015) 4px
+
+        );
+
+    opacity:.25;
+    z-index:1;
+
+}
+
+/*GLOBAL FONTS*/
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+    font-family: var(--font-heading);
+}
+
+button,
+input,
+textarea,
+select{
+    font-family: var(--font-body);
+}
+
+/*LINKS*/
+
+a{
+
+    color:var(--primary);
+    text-decoration:none;
+    position:relative;
+
+}
+
+a::after{
+
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-3px;
+    width:0;
+    height:2px;
+    background:#00d9ff;
+    transition:.35s;
+
+}
+
+a:hover::after{
+
+    width:100%;
+
+}
+
+/*BUTTON DEFAULT*/
+
+button{
+
+    font-family:inherit;
+    cursor:pointer;
+    transition:.35s;
+    border:none;
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/*INPUT DEFAULT*/
+
+input{
+
+    font-family:inherit;
+    outline:none;
+    border:none;
+
+}
+
+@keyframes logoPulse{
+
+    0%,100%{
+
+        text-shadow:
+            0 0 8px #00d9ff,
+            0 0 18px #00d9ff,
+            0 0 40px rgba(0,217,255,.8);
+
+    }
+
+    50%{
+
+        text-shadow:
+            0 0 15px #00ffff,
+            0 0 35px #00ffff,
+            0 0 70px rgba(0,255,255,.9);
+
+    }
+
+}
+
+/*CUSTOM SCROLLBAR*/
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:rgba(10,15,30,.6);
+}
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(
+        to bottom,
+        rgba(0,217,255,.35),
+        rgba(0,110,255,.25)
+    );
+
+    border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(
+        to bottom,
+        rgba(0,217,255,.55),
+        rgba(0,110,255,.40)
+    );
+}
