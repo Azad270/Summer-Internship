@@ -1,0 +1,10 @@
+1.  Creating models or schema using mongoose 
+
+2.  make controller functions whihc will controll the operation on schema 
+
+3. create routes accordingly 
+
+4. create a connection of your database and schema 
+
+5. last app.js m jake apne sare routes ki trf spread hona h 
+    app.js --> routes--> controller functions ---> schema 
