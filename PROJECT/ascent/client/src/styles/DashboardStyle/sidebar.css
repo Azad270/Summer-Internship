@@ -1,0 +1,91 @@
+/*SIDEBAR*/
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 230px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 18px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(40px);
+    border-right: 1px solid var(--border);
+}
+
+.sidebar-logo {
+    font-family: var(--font-heading);
+    color: var(--primary);
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 6px;
+    text-align: center;
+    margin-top: 12px;
+    margin-bottom: 38px;
+}
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 16px;
+    border-radius: 14px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    transition: all .3s ease;
+}
+
+.sidebar-link.active {
+    background: linear-gradient(90deg, var(--primary-soft), transparent);
+    color: var(--primary);
+    border-left: 3px solid var(--primary);
+    box-shadow: -5px 0 20px rgba(0, 217, 255, 0.15); 
+    border-radius: 0 14px 14px 0; 
+}
+
+.sidebar-link:hover {
+    background: var(--glass-bg-light);
+    color: var(--text);
+    transform: translateX(8px);
+}
+
+.sidebar-link::after {
+    display: none;
+}
+
+.logout-btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+    padding: 14px;
+    background: rgba(255, 77, 103, 0.05); /* Mapped to Danger Hue */
+    border: 1px solid rgba(255, 77, 103, 0.2);
+    border-radius: 14px;
+    color: var(--danger); 
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.35s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 77, 103, 0.15);
+    border-color: var(--danger);
+    box-shadow: 
+        0 0 20px rgba(255, 77, 103, 0.2),
+        inset 0 0 10px rgba(255, 77, 103, 0.1);
+    transform: translateY(-2px);
+}

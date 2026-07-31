@@ -1,0 +1,136 @@
+/*MISSION SECTION*/
+.mission-section {
+    padding: 20px 0;
+    /* Removed redundant transparent background and border none */
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header h2 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--text); /* Consuming design system */
+    margin: 0;
+}
+
+.section-header button {
+    background: var(--primary-soft); /* Consuming design system */
+    border: 1px solid var(--border-active); /* Consuming design system */
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.05);
+}
+
+.section-header button:hover {
+    background: rgba(0, 217, 255, 0.15);
+    border-color: rgba(0, 217, 255, 0.8);
+    box-shadow: 
+        0 0 20px rgba(0, 217, 255, 0.3),
+        inset 0 0 10px rgba(0, 217, 255, 0.2);
+}
+
+.mission-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-left: 3px solid transparent;
+    background: var(--glass-bg); /* Consuming design system */
+    backdrop-filter: blur(16px); 
+    -webkit-backdrop-filter: blur(16px);
+    
+    border: 1px solid var(--border); /* Consuming design system */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Kept for the directional light source effect */
+    
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow); /* Consuming design system */
+        
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mission-card:hover {
+    background: var(--primary-soft);
+    border-color: rgba(0, 217, 255, 0.2);
+    box-shadow: 
+        0 10px 40px rgba(0, 217, 255, 0.1),
+        inset 0 0 20px rgba(0, 217, 255, 0.05);
+    transform: translateY(-2px);
+}
+
+.mission-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mission-check {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-soft); /* Consuming design system */
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.mission-left h3 {
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    color: var(--text);
+}
+
+.mission-left p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.mission-right {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* =========================================
+   NEW ADDITIONS TO FIX LAYOUT & COLORS
+========================================= */
+
+.mission-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Because this sits below .mission-card, it naturally overrides it. No !important needed. */
+.mission-card.completed {
+    background: var(--glass-bg-light);
+    border: 1px solid var(--glass-border);
+    opacity: 0.5;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Dims the text inside the completed card */
+.mission-card.completed h3,
+.mission-card.completed p,
+.mission-card.completed .xp,
+.mission-card.completed .difficulty {
+    color: var(--text-secondary); 
+}

@@ -91,7 +91,7 @@ function Sidebar() {
             </div>
 
             <button
-                className="btn btn-danger logout-btn"
+                className="logout-btn"
                 onClick={handleLogout}
             >
 

@@ -7,6 +7,7 @@ import { loginUser } from "../services/authService";
 import { useState } from "react";
 import SuccessModal from "../components/common/SuccessModal";
 import API from "../api/api";
+import { useUser } from "../context/UserContext";
 
 
 function Login() {
@@ -14,6 +15,8 @@ function Login() {
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
+
+    const { setUser } = useUser();
 
     const handleLogin = async (e, formData) => {
 
@@ -36,6 +39,8 @@ function Login() {
             "user",
             JSON.stringify(response.data.user)
         );
+
+        setUser(response.data.user);
 
         navigate("/dashboard", {
             replace: true,

@@ -1,0 +1,54 @@
+/*Command Center*/
+
+.command-center {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 25px;
+}
+
+.command-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-secondary); 
+    font-size: 12px;
+    font-family: var(--font-body);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.system-status span {
+    color: var(--success); 
+    text-shadow: 0 0 8px rgba(25, 255, 115, 0.4); 
+}
+
+.command-title {
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1;
+    font-family: var(--font-body);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text); 
+}
+
+.command-title span {
+    color: var(--primary);
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.3); 
+}
+
+.command-description {
+    max-width: 450px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 16px;
+    font-weight: 500;
+}

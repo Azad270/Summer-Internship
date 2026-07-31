@@ -1,0 +1,95 @@
+/*PROGRESS PANEL*/
+
+.progress-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 26px;
+}
+
+/* 
+  .panel-title has been removed. 
+  It is already handled globally by designSystem.css. 
+  Do not duplicate typography classes.
+*/
+
+.progress-ring {
+    width: 140px;
+    height: 140px;
+    margin: 10px auto;
+    border-radius: 50%;
+    /* Consuming var(--border) instead of hardcoded rgba */
+    background: conic-gradient(var(--primary) 50%, var(--border) 0%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-shadow: 
+        0 0 30px rgba(0, 217, 255, 0.2),
+        inset 0 0 20px rgba(0, 217, 255, 0.2);
+}
+
+.progress-ring::before {
+    content: "";
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: var(--surface); /* Fixed legacy --bg-main */
+    position: absolute;
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.8);
+}
+
+.ring-value {
+    position: relative;
+    z-index: 2;
+    font-size: 26px;
+    color: var(--text); /* Consuming design system */
+    font-weight: 700;
+}
+
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: var(--glass-bg-light); /* Consuming design system */
+    transition: .25s;
+}
+
+.stat-row svg {
+    color: var(--primary);
+    margin-right: 12px;
+}
+
+.stat-row span {
+    flex: 1;
+    color: var(--text-secondary); /* Consuming design system */
+    font-size: 14px;
+}
+
+.stat-row strong {
+    color: var(--text); /* Consuming design system */
+}
+
+.stat-row:hover {
+    background: var(--border-active); /* Consuming design system */
+    transform: translateY(-2px);
+}
+
+.xp {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* 
+  REMOVED: .mission-right (belongs in mission.css)
+  REMOVED: .completed (already handled in mission.css)
+  REMOVED: All difficulty badges (already handled in designSystem.css as .badge-easy, etc.)
+*/

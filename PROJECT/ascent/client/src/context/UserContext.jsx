@@ -24,7 +24,7 @@ export function UserProvider({ children }) {
             setUser(response.data.user);
 
         } catch (error) {
-
+            console.error("System Error: Failed to fetch user data.", error.response?.data || error.message);
             setUser(null);
 
         } finally {
