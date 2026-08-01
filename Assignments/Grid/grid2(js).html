@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Grid Layout using JavaScript</title>
+</head>
+<body>
+
+<script>
+// ---------------- BODY ----------------
+document.body.style.display = "flex";
+document.body.style.justifyContent = "center";
+document.body.style.alignItems = "center";
+document.body.style.height = "100vh";
+document.body.style.margin = "0";
+
+// ---------------- GRID ----------------
+const grid = document.createElement("div");
+
+grid.style.width = "700px";
+grid.style.height = "400px";
+grid.style.display = "grid";
+grid.style.gridTemplateColumns = "1fr 2fr 2fr";
+grid.style.gridTemplateRows = "70px 190px 70px";
+
+document.body.appendChild(grid);
+
+// Function to create items
+function createItem(number) {
+    const item = document.createElement("div");
+
+    item.innerText = number;
+
+    item.style.display = "flex";
+    item.style.justifyContent = "center";
+    item.style.alignItems = "center";
+    item.style.background = "rgb(206, 189, 227)";
+    item.style.border = "1px solid black";
+    item.style.fontSize = "25px";
+
+    return item;
+}
+
+// ---------------- ITEMS ----------------
+const item1 = createItem(1);
+item1.style.gridColumn = "1 / 4";
+
+const item2 = createItem(2);
+item2.style.gridRow = "2 / 4";
+
+const item3 = createItem(3);
+item3.style.gridColumn = "2 / 3";
+
+const item4 = createItem(4);
+item4.style.gridColumn = "3 / 4";
+
+const item5 = createItem(5);
+item5.style.gridColumn = "2 / 4";
+
+const item6 = createItem(6);
+item6.style.gridColumn = "1 / 4";
+
+// ---------------- APPEND ----------------
+grid.appendChild(item1);
+grid.appendChild(item2);
+grid.appendChild(item3);
+grid.appendChild(item4);
+grid.appendChild(item5);
+grid.appendChild(item6);
+
+</script>
+
+</body>
+</html>

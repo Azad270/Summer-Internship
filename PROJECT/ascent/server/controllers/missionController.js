@@ -1,6 +1,8 @@
 const Mission = require("../models/Mission");
 const User = require("../models/User");
 
+const XP_PER_LEVEL = 500;
+
 // @desc    Get all missions for logged-in user
 // @route   GET /api/missions
 const getMissions = async (req, res) => {
@@ -46,7 +48,6 @@ const toggleMission = async (req, res) => {
         if (!mission) {
             return res.status(404).json({ success: false, message: "Mission not found" });
         }
-
         if (mission.user.toString() !== req.user.id) {
             return res.status(401).json({ success: false, message: "Not authorized" });
         }
@@ -54,21 +55,30 @@ const toggleMission = async (req, res) => {
         const isCompleting = !mission.completed;
         mission.completed = isCompleting;
 
+        // Apply XP
         if (isCompleting) {
             user.xp += mission.xp;
         } else {
             user.xp -= mission.xp;
         }
 
-        if (user.xp >= 500) {
+        // FIX 1: Handle Multi-level jumps forward
+        while (user.xp >= XP_PER_LEVEL) {
             user.level += 1;
-            user.xp -= 500; 
-        } else if (user.xp < 0 && user.level > 1) {
+            user.xp -= XP_PER_LEVEL; 
+        } 
+        
+        // FIX 1: Handle Multi-level drops backward
+        while (user.xp < 0 && user.level > 1) {
             user.level -= 1;
-            user.xp += 500;
+            user.xp += XP_PER_LEVEL;
         }
 
-        if (user.xp < 0) user.xp = 0;
+        // Failsafe for Level 1 dropping below 0
+        if (user.xp < 0) {
+            user.xp = 0;
+            user.level = 1;
+        }
 
         await mission.save();
         await user.save();
@@ -90,8 +100,6 @@ const toggleMission = async (req, res) => {
     }
 };
 
-// @desc    Edit/Update a mission's details
-// @route   PUT /api/missions/:id/edit
 const updateMission = async (req, res) => {
     try {
         const { title, description, xp, difficulty } = req.body;
@@ -100,9 +108,16 @@ const updateMission = async (req, res) => {
         if (!mission) {
             return res.status(404).json({ success: false, message: "Mission not found" });
         }
-
         if (mission.user.toString() !== req.user.id) {
             return res.status(401).json({ success: false, message: "Not authorized" });
+        }
+
+        // FIX 2: Block XP exploits on completed missions
+        if (mission.completed && xp !== undefined && Number(xp) !== mission.xp) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "Cannot change the XP value of a completed mission. Uncheck it first." 
+            });
         }
 
         mission.title = title || mission.title;

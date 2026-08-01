@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid2 - JavaScript Only</title>
+</head>
+<body>
+
+<script>
+
+// ---------------- BODY ----------------
+document.body.style.height = "100vh";
+document.body.style.width = "100vw";
+document.body.style.margin = "0";
+
+// ---------------- CONTAINER ----------------
+const container = document.createElement("div");
+
+container.style.height = "100%";
+container.style.width = "100%";
+container.style.display = "grid";
+container.style.gap = "1rem";
+container.style.backgroundColor = "rgb(8, 16, 84)";
+container.style.gridTemplateRows = "repeat(3, 1fr)";
+container.style.gridTemplateColumns = "repeat(4, 1fr)";
+
+document.body.appendChild(container);
+
+// ---------------- FUNCTION TO CREATE BOX ----------------
+function createBox(color) {
+    const box = document.createElement("div");
+
+    box.style.display = "grid";
+    box.style.backgroundColor = color;
+
+    return box;
+}
+
+// ---------------- BOXES ----------------
+const box1 = createBox("rgb(81, 207, 81)");
+box1.style.gridRow = "1 / 4";
+
+const box2 = createBox("rgb(81, 207, 81)");
+box2.style.gridRow = "1 / 2";
+box2.style.gridColumn = "2 / 4";
+
+const box3 = createBox("rgb(158, 32, 21)");
+box3.style.gridRow = "1 / 2";
+box3.style.gridColumn = "4 / 5";
+
+const box4 = createBox("rgb(232, 147, 11)");
+box4.style.gridRow = "2 / 3";
+box4.style.gridColumn = "2 / 3";
+
+const box5 = createBox("rgb(158, 32, 21)");
+box5.style.gridRow = "2 / 3";
+box5.style.gridColumn = "3 / 4";
+
+const box6 = createBox("rgb(81, 207, 81)");
+box6.style.gridRow = "2 / 4";
+box6.style.gridColumn = "4 / 5";
+
+const box7 = createBox("rgb(158, 32, 21)");
+box7.style.gridRow = "3 / 4";
+box7.style.gridColumn = "2 / 3";
+
+const box8 = createBox("rgb(232, 147, 11)");
+box8.style.gridRow = "3 / 4";
+box8.style.gridColumn = "3 / 4";
+
+// ---------------- APPEND BOXES ----------------
+container.appendChild(box1);
+container.appendChild(box2);
+container.appendChild(box3);
+container.appendChild(box4);
+container.appendChild(box5);
+container.appendChild(box6);
+container.appendChild(box7);
+container.appendChild(box8);
+
+</script>
+
+</body>
+</html>

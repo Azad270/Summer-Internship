@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Grid Layout 2</title>
+
+<style>
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.grid{
+    width:700px;
+    height:400px;
+
+    display:grid;
+    grid-template-columns:1fr 2fr 2fr;
+    grid-template-rows:70px 190px 70px;
+    
+}
+
+.item{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgb(206, 189, 227);
+    border:1px solid black;
+    font-size:25px;
+}
+
+.item1{
+    grid-column:1/4;
+}
+
+.item2{
+    grid-row:2/4;
+}
+
+.item3{
+    grid-column:2/3;
+}
+
+.item4{
+    grid-column:3/4;
+}
+
+.item5{
+    grid-column:2/4;
+    
+}
+
+.item6{
+    grid-column:1/4;
+}
+</style>
+
+</head>
+<body>
+
+<div class="grid">
+
+<div class="item item1">1</div>
+<div class="item item2">2</div>
+<div class="item item3">3</div>
+<div class="item item4">4</div>
+<div class="item item5">5</div>
+<div class="item item6">6</div>
+
+</div>
+
+</body>
+</html>
