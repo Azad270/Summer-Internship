@@ -1,56 +1,71 @@
 import { useUser } from "../../context/UserContext";
- // Ensure this is imported if not globally available
+import "../../styles/DashboardStyle/stats.css"; // Ensure your CSS import remains intact
 
 function ProgressPanel() {
-    const { user } = useUser();
+    const { user, currentLevelBaseXp, nextLevelXp } = useUser();
 
-    // Safely pull stats from the user context
+    // 1. Defend against undefined data during initial render
     const currentXP = user?.xp || 0;
-    const currentLevel = user?.level || 1;
-    const xpGoal = 500; 
-    
-    // Calculate accurate completion percentage
-    const progressPercentage = Math.min(Math.round((currentXP / xpGoal) * 100), 100);
+    const baseXP = currentLevelBaseXp || 0;
+    const nextXP = nextLevelXp || 100;
+
+    // 2. Relative math for the current level
+    const xpNeededThisLevel = nextXP - baseXP;
+    const xpGainedThisLevel = currentXP - baseXP;
+
+    // 3. THE FIX: Math.round() forces a clean integer for the UI
+    const progressPercentage = xpNeededThisLevel > 0 
+        ? Math.round(Math.min(100, Math.max(0, (xpGainedThisLevel / xpNeededThisLevel) * 100)))
+        : 100;
+
+    // 4. SVG Circle Math for the radial progress bar
+    const radius = 60;
+    const circumference = 2 * Math.PI * radius;
+    const strokeDashoffset = circumference - (progressPercentage / 100) * circumference;
 
     return (
-        /* 
-          Removed the inline style object completely. 
-          The .panel class handles the base glass look and the hover state.
-          The .progress-panel class handles the padding and flex gap.
-        */
-        <section className="panel progress-panel">
-            {/* Handled by designSystem.css */}
-            <h3 className="panel-title">Ascender Stats</h3>
+        <div className="panel" style={{ padding: "20px", display: "flex", flexDirection: "column", height: "100%" }}>
+            <h2 style={{ color: "var(--text-primary)", textAlign: "center", marginBottom: "20px" }}>
+                Ascender Stats
+            </h2>
             
-            <div className="flex-center">
-                {/* 
-                  Only the dynamic gradient remains inline, mapping to your CSS variables. 
-                  Everything else is handled by .progress-ring in progressPanel.css.
-                */}
-                <div 
-                    className="progress-ring" 
-                    style={{ 
-                        background: `conic-gradient(var(--primary) ${progressPercentage}%, var(--border) 0%)` 
-                    }}
-                >
-                    <div className="ring-value">
-                        {progressPercentage}%
-                    </div>
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flex: 1, position: "relative", margin: "20px 0" }}>
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                    {/* Background track */}
+                    <circle 
+                        cx="75" cy="75" r={radius} 
+                        stroke="rgba(0, 217, 255, 0.1)" 
+                        strokeWidth="12" fill="none" 
+                    />
+                    {/* Active progress */}
+                    <circle 
+                        cx="75" cy="75" r={radius} 
+                        stroke="var(--primary)" 
+                        strokeWidth="12" fill="none" 
+                        strokeDasharray={circumference}
+                        strokeDashoffset={strokeDashoffset}
+                        strokeLinecap="round"
+                        style={{ transition: "stroke-dashoffset 0.5s ease-in-out" }}
+                        transform="rotate(-90 75 75)"
+                    />
+                </svg>
+                {/* Centered Percentage Text */}
+                <div style={{ position: "absolute", fontSize: "1.5rem", fontWeight: "bold", color: "#fff" }}>
+                    {progressPercentage}%
                 </div>
             </div>
 
-            {/* Handled by progressPanel.css */}
-            <div className="stats-list">
-                <div className="stat-row">
-                    <span>Total XP</span>
-                    <strong className="xp">{currentXP}</strong>
+            <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.05)", padding: "10px 15px", borderRadius: "8px" }}>
+                    <span style={{ color: "var(--text-secondary)" }}>Total XP</span>
+                    <span style={{ color: "#fff", fontWeight: "bold" }}>{currentXP}</span>
                 </div>
-                <div className="stat-row">
-                    <span>Current Level</span>
-                    <strong>{currentLevel}</strong>
+                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.05)", padding: "10px 15px", borderRadius: "8px" }}>
+                    <span style={{ color: "var(--text-secondary)" }}>Current Level</span>
+                    <span style={{ color: "#fff", fontWeight: "bold" }}>{user?.level || 1}</span>
                 </div>
             </div>
-        </section>
+        </div>
     );
 }
 

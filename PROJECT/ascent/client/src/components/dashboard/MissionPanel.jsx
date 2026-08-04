@@ -5,102 +5,137 @@ import API from "../../api/api";
 import { useUser } from "../../context/UserContext";
 
 function MissionPanel() {
-    const [missions, setMissions] = useState([]);
+    const [dailyActions, setDailyActions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingMission, setEditingMission] = useState(null); 
+    const [editingAction, setEditingAction] = useState(null); 
     
-    const { setUser } = useUser();
+    // 1. EXTRACTION: Pull the new setters from your Context
+    const { setUser, setCurrentLevelBaseXp, setNextLevelXp } = useUser();
+    const today = new Date().toLocaleDateString('en-CA');
 
     useEffect(() => {
-        fetchMissions();
+        fetchDailyDashboard();
     }, []);
 
-    const fetchMissions = async () => {
+    const fetchDailyDashboard = async () => {
         try {
-            const response = await API.get("/missions");
-            setMissions(response.data.missions);
+            const response = await API.get(`/dashboard/daily?date=${today}`);
+            setDailyActions(response.data.data);
         } catch (error) {
-            console.error("Failed to fetch missions", error);
+            console.error("Failed to fetch daily actions", error);
         } finally {
             setLoading(false);
         }
     };
 
-    const toggleMission = async (id) => {
-        try {
-            setMissions(missions.map(m => 
-                m._id === id ? { ...m, completed: !m.completed } : m
-            ));
-            
-            const response = await API.put(`/missions/${id}`);
 
-            if (response.data.user) {
+    
+    const toggleAction = async (action) => {
+        // Optimistic UI update
+        setDailyActions(dailyActions.map(a => 
+            a._id === action._id ? { ...a, Completed: !a.Completed } : a
+        ));
+        
+        try {
+            let response;
+            if (action.type === "habit") {
+                response = await API.put(`/habits/${action._id}/toggle`, { date: today });
+            } else {
+                response = await API.put(`/missions/${action._id}`);
+            }
+
+            // ==========================================
+            // 2. THE SYNC (XP GAIN)
+            // ==========================================
+            if (response.data && response.data.user) {
                 setUser(response.data.user);
+                setCurrentLevelBaseXp(response.data.currentLevelBaseXp);
+                setNextLevelXp(response.data.nextLevelXp);
+                localStorage.setItem("user", JSON.stringify(response.data.user));
             }
         } catch (error) {
-            console.error("Failed to toggle mission", error);
-            fetchMissions(); 
+            console.error("Failed to toggle action", error);
+            fetchDailyDashboard(); 
         }
     };
 
-    const handleDelete = async (id) => {
+    const handleDelete = async (action) => {
+        if (action.type === "habit") {
+            alert("Habits must be deleted from the Habits Manager page.");
+            return;
+        }
+
         if (!window.confirm("Are you sure you want to delete this mission?")) return;
 
         try {
-            setMissions(missions.filter(m => m._id !== id));
-            await API.delete(`/missions/${id}`);
+            setDailyActions(dailyActions.filter(a => a._id !== action._id));
+            
+            const response = await API.delete(`/missions/${action._id}`);
+            
+            // ==========================================
+            // 3. THE SYNC (XP LOSS REVERT)
+            // ==========================================
+            if (response.data && response.data.user) {
+                setUser(response.data.user);
+                setCurrentLevelBaseXp(response.data.currentLevelBaseXp);
+                setNextLevelXp(response.data.nextLevelXp);
+                localStorage.setItem("user", JSON.stringify(response.data.user));
+            }
         } catch (error) {
             console.error("Failed to delete mission", error);
-            fetchMissions(); 
+            fetchDailyDashboard(); 
         }
     };
-
-    const openEditModal = (mission) => {
-        setEditingMission(mission);
+    
+    const openEditModal = (action) => {
+        if (action.type === "habit") {
+            alert("Habits cannot be edited from the daily view.");
+            return;
+        }
+        setEditingAction(action);
         setIsModalOpen(true);
     };
 
     const openCreateModal = () => {
-        setEditingMission(null); 
+        setEditingAction(null); 
         setIsModalOpen(true);
     };
 
     const handleMissionSubmit = async (missionData) => {
         try {
-            if (editingMission) {
-                const response = await API.put(`/missions/${editingMission._id}/edit`, missionData);
-                setMissions(missions.map(m => m._id === editingMission._id ? response.data.mission : m));
+            if (editingAction) {
+                await API.put(`/missions/${editingAction._id}/edit`, missionData);
             } else {
-                const response = await API.post("/missions", missionData);
-                setMissions([response.data.mission, ...missions]); 
+                const payload = { ...missionData, date: today };
+                await API.post("/missions", payload);
             }
+            fetchDailyDashboard();
             setIsModalOpen(false); 
         } catch (error) {
             console.error("Failed to submit mission", error);
-            alert("Error saving mission.");
+            alert(error.response?.data?.message || "Error saving mission.");
         }
     };
-
+    
     return (
         <section className="mission-section">
             <div className="section-header">
-                <h2>Today's Missions</h2>
+                <h2>Today's Actions</h2>
                 <button onClick={openCreateModal}>Add Mission</button>
             </div>
 
             <div className="mission-list">
-               {/* We removed the .filter() logic here so all missions are displayed */}
-               {missions.length === 0 ? (
-                    <p style={{ color: "var(--text-secondary)" }}>No missions assigned for today. Add one to begin.</p>
+               {dailyActions.length === 0 ? (
+                    <p style={{ color: "var(--text-secondary)" }}>No actions assigned for today. Add one to begin.</p>
                 ) : (
-                    missions.map((mission) => (
+                    dailyActions.map((action) => (
                         <MissionCard
-                            key={mission._id}
-                            mission={mission}          
-                            onToggle={toggleMission}
-                            onEdit={openEditModal}     
-                            onDelete={handleDelete}    
+                            key={action._id}
+                            mission={action}         
+                            onToggle={() => toggleAction(action)} 
+                            onEdit={() => openEditModal(action)}     
+                            onDelete={() => handleDelete(action)}    
                         />
                     ))
                 )}
@@ -110,7 +145,7 @@ function MissionPanel() {
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
                 onSubmit={handleMissionSubmit}
-                initialData={editingMission} 
+                initialData={editingAction} 
             />
         </section>
     );

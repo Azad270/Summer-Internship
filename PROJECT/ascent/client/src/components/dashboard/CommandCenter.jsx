@@ -1,7 +1,8 @@
 import { useUser } from "../../context/UserContext";
 
 function CommandCenter() {
-    const { user, loading } = useUser();
+    // 1. Extract nextLevelXp from your Context
+    const { user, loading, currentLevelBaseXp, nextLevelXp } = useUser();
     const hour = new Date().getHours();
 
     let greeting = "Good Evening";
@@ -17,6 +18,17 @@ function CommandCenter() {
             </section>
         );
     }
+
+    // 2. Failsafe boundary calculations to prevent NaN or Infinity in CSS
+    const maxLevelXp = nextLevelXp || 100;
+    const currentXp = user?.xp || 0;
+    const xpNeededThisLevel = (nextLevelXp || 100) - (currentLevelBaseXp || 0);
+    const xpGainedThisLevel = (user?.xp || 0) - (currentLevelBaseXp || 0);
+    
+    // 3. THE FIX: Math.round() forces a clean integer for the UI
+    const progressPercentage = xpNeededThisLevel > 0 
+    ? Math.round(Math.min(100, Math.max(0, (xpGainedThisLevel / xpNeededThisLevel) * 100)))
+    : 100;
 
     return (
         <section className="command-center">
@@ -38,12 +50,14 @@ function CommandCenter() {
             <div className="xp-section">
                 <div className="xp-header">
                     <span>LEVEL {String(user?.level || 1).padStart(2, "0")}</span>
-                    <span>{user?.xp || 0} / 500 XP</span>
+                    {/* Inject dynamic boundaries instead of hardcoded strings */}
+                    <span>{currentXp} / {Math.floor(maxLevelXp)} XP</span>
                 </div>
                 <div className="xp-bar">
                     <div
                         className="xp-fill"
-                        style={{ width: `${((user?.xp || 0) / 500) * 100}%`, transition: "width 1s ease-out" }}
+                        // Use the dynamic percentage math
+                        style={{ width: `${progressPercentage}%`, transition: "width 1s ease-out" }}
                     />
                 </div>
             </div>    

@@ -88,8 +88,3 @@
     font-weight: 700;
 }
 
-/* 
-  REMOVED: .mission-right (belongs in mission.css)
-  REMOVED: .completed (already handled in mission.css)
-  REMOVED: All difficulty badges (already handled in designSystem.css as .badge-easy, etc.)
-*/

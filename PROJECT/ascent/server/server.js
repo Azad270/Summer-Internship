@@ -5,7 +5,8 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const missionRoutes = require("./routes/missionRoutes");
-
+const dashboardRoutes = require("./routes/dashboardRoutes");
+const habitRoutes = require("./routes/habitRoutes");
 // Load environment variables
 dotenv.config();
 
@@ -21,7 +22,8 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/missions", missionRoutes);
-
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/habits", habitRoutes);
 // Test Route
 app.get("/", (req, res) => {
     res.send("🚀 ASCENT Backend is Running...");

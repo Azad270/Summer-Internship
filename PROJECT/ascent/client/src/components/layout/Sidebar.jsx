@@ -47,16 +47,6 @@ function Sidebar() {
                     </NavLink>
 
                     <NavLink
-                        to="/progress"
-                        className={({ isActive }) =>
-                            `sidebar-link ${isActive ? "active" : ""}`
-                        }
-                    >
-                        <FaChartLine />
-                        <span>Progress</span>
-                    </NavLink>
-
-                    <NavLink
                         to="/habits"
                         className={({ isActive }) =>
                             `sidebar-link ${isActive ? "active" : ""}`
@@ -64,6 +54,16 @@ function Sidebar() {
                     >
                         <FaBullseye />
                         <span>Habits</span>
+                    </NavLink>
+
+                    <NavLink
+                        to="/progress"
+                        className={({ isActive }) =>
+                            `sidebar-link ${isActive ? "active" : ""}`
+                        }
+                    >
+                        <FaChartLine />
+                        <span>Progress</span>
                     </NavLink>
 
                     <NavLink

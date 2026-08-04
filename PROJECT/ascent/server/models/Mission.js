@@ -30,10 +30,19 @@ const missionSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    // Add this inside your MissionSchema
+    date: {
+        type: String,
+        required: true,
+        // Format will be "YYYY-MM-DD"
+    }
+
   },
   {
     timestamps: true,
   }
+  
 );
 
 module.exports = mongoose.model("Mission", missionSchema);
