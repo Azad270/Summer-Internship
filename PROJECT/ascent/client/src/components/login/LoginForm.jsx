@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-function LoginForm({ onSubmit }) {
+// 1. Destructure the loading prop
+function LoginForm({ onSubmit, loading }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    
     return (
         <>
             <h1 className="logo">ASCENT</h1>
@@ -24,10 +26,8 @@ function LoginForm({ onSubmit }) {
                     })
                 }
             >
-
                 <div className="input-box">
                     <i className="fa-solid fa-envelope"></i>
-
                     <input
                         type="email"
                         placeholder="Email Address"
@@ -39,7 +39,6 @@ function LoginForm({ onSubmit }) {
 
                 <div className="input-box">
                     <i className="fa-solid fa-lock"></i>
-
                     <input
                         type="password"
                         placeholder="Password"
@@ -49,11 +48,18 @@ function LoginForm({ onSubmit }) {
                     />
                 </div>
 
-                <button type="submit">
-                    <i className="fa-solid fa-arrow-right"></i>
-                    {" "}Enter System
+                {/* 2. Bind the disabled attribute and conditionally render content */}
+                <button type="submit" disabled={loading}>
+                    {loading ? (
+                        <>
+                            <i className="fa-solid fa-spinner fa-spin"></i> Authenticating...
+                        </>
+                    ) : (
+                        <>
+                            <i className="fa-solid fa-arrow-right"></i> Enter System
+                        </>
+                    )}
                 </button>
-
             </form>
 
             <p className="register-text">

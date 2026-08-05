@@ -68,9 +68,9 @@ function Login() {
             <main className="auth-container">
 
                 <section className="auth-card">
-
-                    <LoginForm
-                        onSubmit={handleLogin}
+                    <LoginForm 
+                        onSubmit={handleLogin} 
+                        loading={loading} 
                     />
 
                 </section>
