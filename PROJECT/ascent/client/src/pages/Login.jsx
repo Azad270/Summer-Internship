@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import LoginForm from "../components/login/LoginForm";
 import Background from "../components/common/Background";
 import "../styles/global.css";
 import "../styles/auth.css";
 import { loginUser } from "../services/authService";
-import { useState } from "react";
 import SuccessModal from "../components/common/SuccessModal";
 import API from "../api/api";
 import { useUser } from "../context/UserContext";
@@ -16,6 +16,8 @@ function Login() {
 
     const [loading, setLoading] = useState(false);
 
+    const [errorMessage, setErrorMessage] = useState("");
+
     const { setUser } = useUser();
 
     const handleLogin = async (e, formData) => {
@@ -23,6 +25,8 @@ function Login() {
     e.preventDefault();
 
     setLoading(true);
+
+    setErrorMessage("");
 
     try {
 
@@ -48,10 +52,9 @@ function Login() {
 
     } catch (error) {
 
-        alert(
-            error.response?.data?.message ||
-            "Login Failed"
-        );
+        setErrorMessage(
+                error.response?.data?.message || "Authentication failed. Please try again."
+            );
 
     } finally {
 
@@ -71,6 +74,7 @@ function Login() {
                     <LoginForm 
                         onSubmit={handleLogin} 
                         loading={loading} 
+                        errorMessage={errorMessage}
                     />
 
                 </section>

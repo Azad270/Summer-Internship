@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 
 // 1. Destructure the loading prop
-function LoginForm({ onSubmit, loading }) {
+function LoginForm({ onSubmit, loading, errorMessage}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
@@ -17,6 +17,21 @@ function LoginForm({ onSubmit, loading }) {
             <div className="divider"></div>
 
             <h2>SYSTEM AUTHORIZATION</h2>
+
+            {errorMessage && (
+                <div style={{
+                    backgroundColor: "rgba(255, 0, 0, 0.1)",
+                    color: "#ff4d4d",
+                    border: "1px solid #ff4d4d",
+                    padding: "10px",
+                    borderRadius: "5px",
+                    marginBottom: "15px",
+                    fontSize: "14px",
+                    textAlign: "center"
+                }}>
+                    {errorMessage}
+                </div>
+            )}
 
             <form
                 onSubmit={(e) =>
