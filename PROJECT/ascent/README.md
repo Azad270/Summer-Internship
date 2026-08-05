@@ -29,17 +29,21 @@ Ascent is a full-stack MERN habit-tracking application featuring a sci-fi cyber-
 ### 1. Clone the repository
 \`\`\`bash
 git clone https://github.com/Azad270/Summer-Internship.git
-cd PROJECT
-cd ascent
+cd PROJECT/ascent
 \`\`\`
 
-### 2. Environment Variables
-Create a `.env` file in your frontend root:
+### 2. Frontend Environment Setup
+Navigate to the client directory and create a `.env` file:
+\`\`\`bash
+cd client
+\`\`\`
+Add the following to connect to the live production backend:
 \`\`\`env
 VITE_API_URL=https://ascent-backend-ytoi.onrender.com/api
 \`\`\`
 
 ### 3. Installation & Execution
+Install dependencies and start the local development server:
 \`\`\`bash
 npm install
 npm run dev
