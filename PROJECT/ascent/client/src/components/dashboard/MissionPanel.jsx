@@ -120,14 +120,22 @@ function MissionPanel() {
     
     return (
         <section className="mission-section">
-            <div className="section-header">
-                <h2>Today's Actions</h2>
-                <button onClick={openCreateModal}>Add Mission</button>
+            <div className="section-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+                <h2 style={{ fontFamily: "var(--font-heading)", fontSize: "1.5rem", margin: 0, textTransform: "uppercase" }}>Daily Quests</h2>
+                <button 
+                    onClick={openCreateModal}
+                    className="btn-primary"
+                    style={{ background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", color: "#000", border: "none", padding: "8px 16px", borderRadius: "6px", fontWeight: "800", cursor: "pointer", textTransform: "uppercase", letterSpacing: "1px", boxShadow: "0 0 15px rgba(0, 217, 255, 0.4)" }}
+                >
+                    + Assign Quest
+                </button>
             </div>
 
-            <div className="mission-list">
+            <div className="mission-list" style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                {dailyActions.length === 0 ? (
-                    <p style={{ color: "var(--text-secondary)" }}>No actions assigned for today. Add one to begin.</p>
+                    <div className="panel" style={{ padding: "30px", textAlign: "center", border: "1px dashed rgba(0, 217, 255, 0.2)" }}>
+                        <p style={{ color: "var(--text-secondary)", fontStyle: "italic" }}>No daily quests assigned by the System. Add one to begin leveling.</p>
+                    </div>
                 ) : (
                     dailyActions.map((action) => (
                         <MissionCard

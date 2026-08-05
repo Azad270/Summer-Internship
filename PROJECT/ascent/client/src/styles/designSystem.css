@@ -114,3 +114,13 @@
 .text-center{
     text-align:center;
 }
+
+/* DATA VISUALIZATION TYPOGRAPHY */
+.stat-number {
+    font-family: var(--font-heading); /* Uses Orbitron for a mechanical look */
+    color: var(--primary);
+    text-shadow: 0 0 12px var(--primary-soft), 0 0 24px rgba(0, 217, 255, 0.4);
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-variant-numeric: tabular-nums; /* Forces equal width for all numbers */
+}

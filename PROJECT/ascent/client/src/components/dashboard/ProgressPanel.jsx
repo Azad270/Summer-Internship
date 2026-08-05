@@ -24,13 +24,13 @@ function ProgressPanel() {
     const strokeDashoffset = circumference - (progressPercentage / 100) * circumference;
 
     return (
-        <div className="panel" style={{ padding: "20px", display: "flex", flexDirection: "column", height: "100%" }}>
-            <h2 style={{ color: "var(--text-primary)", textAlign: "center", marginBottom: "20px" }}>
-                Ascender Stats
+        <div className="panel" style={{ padding: "30px", display: "flex", flexDirection: "column", height: "100%", background: "rgba(10, 15, 26, 0.6)" }}>
+            <h2 style={{ color: "var(--text-primary)", textAlign: "center", marginBottom: "20px", fontFamily: "var(--font-heading)", textTransform: "uppercase", letterSpacing: "2px" }}>
+                Player <span style={{ color: "var(--primary)" }}>Status</span>
             </h2>
             
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flex: 1, position: "relative", margin: "20px 0" }}>
-                <svg width="150" height="150" viewBox="0 0 150 150">
+                <svg width="150" height="150" viewBox="0 0 150 150" style={{ filter: "drop-shadow(0 0 12px rgba(0, 217, 255, 0.4))" }}>
                     {/* Background track */}
                     <circle 
                         cx="75" cy="75" r={radius} 
@@ -45,24 +45,24 @@ function ProgressPanel() {
                         strokeDasharray={circumference}
                         strokeDashoffset={strokeDashoffset}
                         strokeLinecap="round"
-                        style={{ transition: "stroke-dashoffset 0.5s ease-in-out" }}
+                        style={{ transition: "stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1)" }}
                         transform="rotate(-90 75 75)"
                     />
                 </svg>
                 {/* Centered Percentage Text */}
-                <div style={{ position: "absolute", fontSize: "1.5rem", fontWeight: "bold", color: "#fff" }}>
-                    {progressPercentage}%
+                <div style={{ position: "absolute", fontSize: "1.75rem", fontWeight: "bold", color: "#fff", fontFamily: "var(--font-heading)" }}>
+                    <span className="stat-number">{progressPercentage}</span>%
                 </div>
             </div>
 
-            <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.05)", padding: "10px 15px", borderRadius: "8px" }}>
-                    <span style={{ color: "var(--text-secondary)" }}>Total XP</span>
-                    <span style={{ color: "#fff", fontWeight: "bold" }}>{currentXP}</span>
+            <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", padding: "12px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                    <span style={{ color: "var(--text-secondary)", textTransform: "uppercase", fontSize: "0.85rem", letterSpacing: "1px" }}>Total XP</span>
+                    <span className="stat-number" style={{ fontSize: "1.1rem" }}>{currentXP}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.05)", padding: "10px 15px", borderRadius: "8px" }}>
-                    <span style={{ color: "var(--text-secondary)" }}>Current Level</span>
-                    <span style={{ color: "#fff", fontWeight: "bold" }}>{user?.level || 1}</span>
+                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", padding: "12px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                    <span style={{ color: "var(--text-secondary)", textTransform: "uppercase", fontSize: "0.85rem", letterSpacing: "1px" }}>Current Level</span>
+                    <span className="stat-number" style={{ fontSize: "1.1rem" }}>{user?.level || 1}</span>
                 </div>
             </div>
         </div>

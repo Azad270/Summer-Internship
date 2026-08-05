@@ -22,7 +22,44 @@ const getCurrentUser = async (req, res) => {
         });
 
     } catch (error) {
-        console.error(error);
+        console.error("Error in getCurrentUser:", error);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
+    }
+};
+
+const updateProfile = async (req, res) => {
+    try {
+        const { avatar } = req.body;
+        
+        const user = await User.findById(req.user.id).select("-password");
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        // Update the avatar if provided
+        if (avatar !== undefined) {
+            user.avatar = avatar;
+        }
+
+        await user.save();
+
+        // Return the exact same payload structure as getCurrentUser to keep React Context synced
+        res.status(200).json({
+            success: true,
+            user,
+            currentLevelBaseXp: calculateLevelBaseXp(user.level),
+            nextLevelXp: calculateNextLevelXp(user.level)
+        });
+
+    } catch (error) {
+        console.error("Error in updateProfile:", error);
         res.status(500).json({
             success: false,
             message: "Server Error",
@@ -32,4 +69,5 @@ const getCurrentUser = async (req, res) => {
 
 module.exports = {
     getCurrentUser,
+    updateProfile
 };

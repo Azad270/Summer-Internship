@@ -1,7 +1,7 @@
 const Habit = require("../models/Habit");
 const User = require("../models/User"); // FIX: Imported User model
 const { processExpGain, calculateNextLevelXp, calculateLevelBaseXp} = require("../utils/progression");
-// @desc    Create a new habit blueprint
+const { calculateCurrentStreak } = require('../utils/streakCalculator');
 // @route   POST /api/habits
 const createHabit = async (req, res) => {
     try {
@@ -54,12 +54,27 @@ const updateHabit = async (req, res) => {
 
 // @desc    Get all habit blueprints (For the dedicated Habits page)
 // @route   GET /api/habits
+// @desc    Get all habits for the logged-in user
+// @route   GET /api/habits
 const getHabits = async (req, res) => {
     try {
-        const habits = await Habit.find({ user: req.user.id }).sort({ createdAt: -1 });
-        res.status(200).json({ success: true, count: habits.length, data: habits });
+        const habits = await Habit.find({ user: req.user.id });
+
+        // Intercept the data and inject the dynamic streak
+        const habitsWithStreaks = habits.map(habit => {
+            const habitObj = habit.toObject(); // Convert Mongoose document to plain JS object
+            habitObj.currentStreak = calculateCurrentStreak(habitObj.completedDates || []);
+            return habitObj;
+        });
+
+        res.status(200).json({ 
+            success: true, 
+            count: habitsWithStreaks.length, 
+            data: habitsWithStreaks 
+        });
     } catch (error) {
-        res.status(500).json({ message: "Server Error", error: error.message });
+        console.error("Get Habits Error:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
 };
 
@@ -106,9 +121,12 @@ const toggleHabit = async (req, res) => {
         await habit.save();
         await user.save();
 
+        const habitObj = habit.toObject();
+        habitObj.currentStreak = calculateCurrentStreak(habitObj.completedDates || []);
+
         res.status(200).json({
             success: true,
-            habit,
+            habit: habitObj,
             user,
             currentLevelBaseXp: calculateLevelBaseXp(user.level),
             nextLevelXp: calculateNextLevelXp(user.level)
@@ -152,5 +170,44 @@ const deleteHabit = async (req, res) => {
     }
 };
 
+const exportHabitsCSV = async (req, res) => {
+    try {
+        // Retrieve all protocols assigned to the requesting user
+        const habits = await Habit.find({ user: req.user.id });
+
+        if (!habits || habits.length === 0) {
+            return res.status(404).json({ message: "No operational data found for extraction." });
+        }
+
+        // Define the CSV Headers
+        const csvHeader = "Protocol Name,Category,Difficulty,Current Streak,Total XP Yield,Creation Date\n";
+
+        // Map the database documents to CSV rows
+        const csvRows = habits.map(habit => {
+            // Sanitize strings to prevent CSV injection or formatting breaks
+            const name = `"${(habit.title || habit.name || "").replace(/"/g, '""')}"`;
+            const category = `"${(habit.category || "General").replace(/"/g, '""')}"`;
+            const difficulty = `"${habit.difficulty || "Medium"}"`;
+            const streak = habit.streak || 0;
+            const xpYield = habit.xpReward || 0; // Adjust if your schema uses a different field name
+            const createdAt = habit.createdAt ? new Date(habit.createdAt).toISOString().split('T')[0] : "Unknown";
+
+            return `${name},${category},${difficulty},${streak},${xpYield},${createdAt}`;
+        });
+
+        // Construct the final file blob
+        const csvData = csvHeader + csvRows.join("\n");
+
+        // Set headers to force a file download on the client side
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename="ascent_telemetry.csv"');
+        
+        return res.status(200).send(csvData);
+
+    } catch (error) {
+        console.error("Telemetry Export Error:", error);
+        res.status(500).json({ message: "Server failure during data extraction." });
+    }
+};
 // FIX: Now all functions exist in the local scope and will export properly
-module.exports = { createHabit, updateHabit, getHabits, toggleHabit, deleteHabit };
+module.exports = { createHabit, updateHabit, getHabits, toggleHabit, deleteHabit, exportHabitsCSV };

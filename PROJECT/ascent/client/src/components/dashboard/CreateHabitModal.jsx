@@ -83,6 +83,9 @@ function CreateHabitModal({ isOpen, onClose, onSubmit, initialData }) {
                                 <option value="Medium" style={{ color: "black" }}>Medium</option>
                                 <option value="Hard" style={{ color: "black" }}>Hard</option>
                                 <option value="Elite" style={{ color: "black" }}>Elite</option>
+                                <option value="Master" style={{ color: "black" }}>Master</option>
+                                <option value="GrandMaster" style={{ color: "black" }}>GrandMaster</option>
+                                
                             </select>
                         </div>
                     </div>

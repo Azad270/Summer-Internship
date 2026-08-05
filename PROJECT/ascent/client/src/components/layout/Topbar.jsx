@@ -1,27 +1,17 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    FaBell,
-    FaMagnifyingGlass,
-    FaUserAstronaut
-} from "react-icons/fa6";
-import { useUser } from "../../context/UserContext"; // Adjust path if necessary
+import { FaBell, FaMagnifyingGlass, FaUserAstronaut } from "react-icons/fa6";
+import { useUser } from "../../context/UserContext"; 
 
 function Topbar() {
-    // Bring in user data and router navigation
     const { user } = useUser();
     const navigate = useNavigate();
-    
-    // State to hold what the user types in the search bar
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Function to trigger when a key is pressed
     const handleSearch = (e) => {
-        // If they press Enter and the box isn't empty
         if (e.key === "Enter" && searchQuery.trim() !== "") {
-            // Send them to the habits page with a URL parameter
             navigate(`/habits?search=${encodeURIComponent(searchQuery)}`);
-            setSearchQuery(""); // Clear the input box after searching
+            setSearchQuery(""); 
         }
     };
 
@@ -32,10 +22,10 @@ function Topbar() {
                 <FaMagnifyingGlass style={{ color: "var(--text-secondary)" }} />
                 <input
                     type="text"
-                    placeholder="Search habits..."
+                    placeholder="Search system protocols..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyDown={handleSearch} /* Listen for the Enter key */
+                    onKeyDown={handleSearch} 
                 />
             </div>
 
@@ -46,14 +36,32 @@ function Topbar() {
                 </button>
 
                 <div className="profile-box">
-                    <div className="profile-avatar">
-                        <FaUserAstronaut />
+                    <div className="profile-avatar" style={{ 
+                        width: "40px", 
+                        height: "40px", 
+                        borderRadius: "50%", 
+                        overflow: "hidden", 
+                        background: "rgba(0, 217, 255, 0.1)", 
+                        border: "1px solid var(--primary)",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>
+                        {user?.avatar ? (
+                            <img 
+                                src={user.avatar} 
+                                alt="Operative" 
+                                style={{ width: "100%", height: "100%", objectFit: "cover" }} 
+                                onError={(e) => { e.target.style.display='none'; }} // Failsafe if URL is broken
+                            />
+                        ) : (
+                            <FaUserAstronaut size={20} color="var(--primary)" />
+                        )}
                     </div>
 
                     <div>
-                        {/* Dynamically render the user's name and rank */}
-                        <h4>{user?.username || "Ascender"}</h4>
-                        <p>Rank {user?.rank || "E"}</p>
+                        <h4 style={{ fontFamily: "var(--font-heading)", letterSpacing: "1px" }}>{user?.username || "Ascender"}</h4>
+                        <p style={{ color: "var(--primary)" }}>Rank {user?.rank || "E"}</p>
                     </div>
                 </div>
 

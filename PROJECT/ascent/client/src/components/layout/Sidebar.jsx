@@ -43,7 +43,7 @@ function Sidebar() {
                         }
                     >
                         <FaHouse />
-                        <span>Dashboard</span>
+                        <span>System Status</span>
                     </NavLink>
 
                     <NavLink
@@ -53,7 +53,7 @@ function Sidebar() {
                         }
                     >
                         <FaBullseye />
-                        <span>Habits</span>
+                        <span>Quest Log</span>
                     </NavLink>
 
                     <NavLink
@@ -63,7 +63,7 @@ function Sidebar() {
                         }
                     >
                         <FaChartLine />
-                        <span>Progress</span>
+                        <span>Hunter Assessment</span>
                     </NavLink>
 
                     <NavLink
@@ -73,7 +73,7 @@ function Sidebar() {
                         }
                     >
                         <FaFire />
-                        <span>Streaks</span>
+                        <span>Survival Streak</span>
                     </NavLink>
 
                     <NavLink
@@ -83,7 +83,7 @@ function Sidebar() {
                         }
                     >
                         <FaGear />
-                        <span>Settings</span>
+                        <span>System Config</span>
                     </NavLink>
 
                 </nav>

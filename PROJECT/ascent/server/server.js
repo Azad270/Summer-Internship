@@ -31,6 +31,8 @@ app.get("/", (req, res) => {
 
 // Server Port
 const PORT = process.env.PORT || 5000;
+const startCronJobs = require('./utils/cronJobs');
+startCronJobs();
 
 // Start Server
 app.listen(PORT, () => {

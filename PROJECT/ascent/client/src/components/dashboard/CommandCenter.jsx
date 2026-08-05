@@ -38,32 +38,42 @@ function CommandCenter() {
                 ASCENT OS READY
             </div>
 
-            <h1 className="command-title">
+            <h1 className="command-title" style={{ fontFamily: "var(--font-heading)" }}>
                 {greeting},
-                <span style={{ color: "var(--primary)" }}> {user?.username || "Hunter"}</span>
+                <span style={{ color: "var(--primary)", textShadow: "0 0 15px rgba(0, 217, 255, 0.4)" }}> {user?.username || "Hunter"}</span>
             </h1>
 
-            <p className="command-description">
+            <p className="command-description" style={{ color: "var(--text-secondary)" }}>
                 Complete today's missions and continue your journey toward becoming your best self.
             </p>
 
-            <div className="xp-section">
-                <div className="xp-header">
-                    <span>LEVEL {String(user?.level || 1).padStart(2, "0")}</span>
-                    {/* Inject dynamic boundaries instead of hardcoded strings */}
-                    <span>{currentXp} / {Math.floor(maxLevelXp)} XP</span>
+            {/* UPGRADED XP BAR */}
+            <div className="xp-section" style={{ marginTop: "25px" }}>
+                <div className="xp-header" style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", fontFamily: "var(--font-heading)", textTransform: "uppercase", letterSpacing: "1px" }}>
+                    <span style={{ color: "var(--text-secondary)" }}>
+                        System Level <span className="stat-number" style={{ color: "#fff", fontSize: "1.3rem", marginLeft: "8px" }}>{String(user?.level || 1).padStart(2, "0")}</span>
+                    </span>
+                    <span style={{ color: "var(--text-secondary)" }}>
+                        <span className="stat-number" style={{ color: "var(--primary)", fontSize: "1.3rem" }}>{currentXp}</span> / <span className="stat-number">{Math.floor(maxLevelXp)}</span> XP
+                    </span>
                 </div>
-                <div className="xp-bar">
+                <div className="xp-bar" style={{ width: "100%", height: "24px", background: "rgba(0,0,0,0.6)", border: "1px solid var(--border-active)", borderRadius: "4px", overflow: "hidden", boxShadow: "inset 0 0 10px rgba(0,0,0,0.8)" }}>
                     <div
                         className="xp-fill"
-                        // Use the dynamic percentage math
-                        style={{ width: `${progressPercentage}%`, transition: "width 1s ease-out" }}
+                        style={{ 
+                            width: `${progressPercentage}%`, 
+                            height: "100%",
+                            background: "linear-gradient(90deg, #009DFF 0%, var(--primary) 100%)",
+                            boxShadow: "0 0 15px var(--primary-soft)",
+                            transition: "width 1s cubic-bezier(0.4, 0, 0.2, 1)" 
+                        }}
                     />
                 </div>
             </div>    
             
         </section>
     );
+    
 }
 
 export default CommandCenter;

@@ -7,19 +7,34 @@ function MissionCard({ mission, onToggle, onEdit, onDelete }) {
     // Fallback to false just in case
     const isFinished = Completed || false;
 
+    // 2. System Rank Converter (Matches Habits.jsx)
+    const getRankBadge = (diff) => {
+        if (!diff) return "E-Rank";
+        const d = diff.toLowerCase();
+        if (d === "easy") return "E-Rank";
+        if (d === "medium") return "D-Rank";
+        if (d === "hard") return "C-Rank";
+        if (d === "elite") return "B-Rank";
+        if (d === "Master") return "A-Rank";
+        if (d === "GrandMaster") return "S-Rank";
+        return diff;
+    };
+
     return (
-        <div className={`mission-card ${isFinished ? "completed" : ""}`}>
+        <div className={`mission-card ${isFinished ? "completed" : ""}`} style={{ opacity: isFinished ? 0.6 : 1, transition: "opacity 0.3s" }}>
             <div className="mission-left">
                 <div 
                     className="mission-check"
-                    onClick={onToggle} // Parent handles passing the object
+                    onClick={onToggle} 
                     style={{ 
                         cursor: "pointer",
-                        background: isFinished ? "var(--primary)" : "rgba(0,217,255,.12)",
+                        background: isFinished ? "var(--primary)" : "rgba(0,217,255,.05)",
+                        border: isFinished ? "none" : "1px solid var(--border-active)",
+                        boxShadow: isFinished ? "0 0 15px rgba(0, 217, 255, 0.4)" : "none",
                         transition: "all 0.2s ease"
                     }}
                 >
-                    {isFinished ? <FaCheckCircle color="#02111d" /> : <FaRegCircle />}
+                    {isFinished ? <FaCheckCircle color="#02111d" /> : <FaRegCircle color="var(--primary)" />}
                 </div>
 
                 <div>
@@ -28,11 +43,12 @@ function MissionCard({ mission, onToggle, onEdit, onDelete }) {
                         margin: "0 0 4px 0", 
                         display: "flex", 
                         alignItems: "center", 
-                        gap: "8px" 
+                        gap: "8px",
+                        color: isFinished ? "var(--text-secondary)" : "var(--text-primary)"
                     }}>
                         {title}
                         
-                        {/* 2. Visual Tag to differentiate Habits and Missions */}
+                        {/* Visual Tag to differentiate Habits and Missions */}
                         <span style={{
                             fontSize: "0.6rem",
                             padding: "2px 6px",
@@ -43,33 +59,37 @@ function MissionCard({ mission, onToggle, onEdit, onDelete }) {
                             display: "flex",
                             alignItems: "center",
                             gap: "4px",
-                            fontWeight: "bold"
+                            fontWeight: "bold",
+                            textDecoration: "none" // Prevents line-through from bleeding into the tag
                         }}>
                             {type === "habit" ? <FaSyncAlt size={8}/> : <FaStar size={8}/>}
                             {type}
                         </span>
                     </h3>
                     
-                    {/* Render Description with proper Dashboard styling */}
+                    {/* Render Description */}
                     {description && (
-                        <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: "1.4" }}>
+                        <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "var(--text-secondary)", lineHeight: "1.4", textDecoration: isFinished ? "line-through" : "none" }}>
                             {description}
                         </p>
                     )}
-                                    </div>
+                </div>
             </div>
             
             <div className="mission-right" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-                {/* Habits might not have a difficulty set, guard clause added */}
+                {/* 3. Render the converted Rank Badge */}
                 {difficulty && (
-                    <span className={`difficulty ${difficulty.toLowerCase()}`}>
-                        {difficulty}
+                    <span className={`badge badge-${difficulty.toLowerCase()}`} style={{ fontSize: "0.75rem", padding: "4px 10px", borderRadius: "4px", textTransform: "uppercase", letterSpacing: "1px", border: "1px solid currentColor" }}>
+                        {getRankBadge(difficulty)}
                     </span>
                 )}
                 
-                <span className="xp">+{xp || 10} XP</span>
+                {/* 4. Apply the stat-number font to the XP */}
+                <span className="xp" style={{ color: "var(--primary)", fontFamily: "var(--font-heading)", letterSpacing: "1px", fontWeight: "bold" }}>
+                    +<span className="stat-number">{xp || 10}</span> XP
+                </span>
                 
-                {/* 3. Guard against rendering CRUD actions for Habits */}
+                {/* Guard against rendering CRUD actions for Habits */}
                 {type === "mission" && (
                     <div className="mission-actions" style={{ display: 'flex', gap: '12px', marginLeft: '10px', borderLeft: '1px solid rgba(255,255,255,0.1)', paddingLeft: '15px' }}>
                         <FaEdit 

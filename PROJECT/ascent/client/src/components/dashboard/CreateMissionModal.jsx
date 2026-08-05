@@ -74,6 +74,8 @@ function CreateMissionModal({ isOpen, onClose, onSubmit, initialData }) {
                                 <option value="Medium">Medium</option>
                                 <option value="Hard">Hard</option>
                                 <option value="Elite">Elite</option>
+                                <option value="Master">Master</option>
+                                <option value="GrandMaster">GrandMaster</option>
                             </select>
                         </div>
                     </div>

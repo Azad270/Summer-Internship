@@ -42,26 +42,27 @@ function Progress() {
                 {/* WIDGET 1: THE XP PROGRESS BAR */}
                 <section className="panel" style={{ padding: "30px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
-                        <h2 style={{ margin: 0, color: "var(--text-primary)" }}>Current Ascension</h2>
+                        <h2 style={{ margin: 0, color: "var(--text-primary)", fontFamily: "var(--font-heading)", textTransform: "uppercase", letterSpacing: "2px" }}>System Awakening</h2>
                         <div style={{ textAlign: "right" }}>
-                            <h3 style={{ margin: 0, color: "var(--primary)" }}>Rank: {user?.rank || "E"}</h3>
-                            <span style={{ fontWeight: "bold" }}>Level {user?.level || 1}</span>
+                            <h3 style={{ margin: 0, color: "var(--primary)" }}>Rank: <span className="stat-number">{user?.rank || "E"}</span></h3>
+                            <span style={{ fontWeight: "bold", color: "var(--text-secondary)" }}>Level <span className="stat-number">{user?.level || 1}</span></span>
                         </div>
                     </div>
                     
-                    <div style={{ width: "100%", background: "#222", borderRadius: "10px", overflow: "hidden" }}>
+                    <div style={{ width: "100%", background: "rgba(0,0,0,0.5)", border: "1px solid var(--border-active)", borderRadius: "4px", overflow: "hidden", boxShadow: "inset 0 0 10px rgba(0,0,0,0.8)" }}>
                         <div 
                             style={{ 
                                 width: `${progressPercentage}%`, 
-                                background: "linear-gradient(90deg, var(--primary) 0%, #00ffcc 100%)", 
-                                height: "24px", 
-                                transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)" 
+                                background: "linear-gradient(90deg, #009DFF 0%, var(--primary) 100%)", 
+                                height: "36px", 
+                                transition: "width 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                                boxShadow: "0 0 15px var(--primary-soft)"
                             }} 
                         />
                     </div>
                     
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "8px", fontSize: "0.85rem", color: "var(--text-secondary)" }}>
-                        <span>XP: {user?.xp || 0} / {nextLevelXp}</span>
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "8px", fontSize: "0.85rem", color: "var(--text-secondary)", fontFamily: "var(--font-heading)" }}>
+                        <span><span className="stat-number">{user?.xp || 0}</span> / <span className="stat-number">{nextLevelXp}</span> XP</span>
                     </div>
                 </section>
 
@@ -76,37 +77,44 @@ function Progress() {
                     ) : (
                         <div style={{ width: "100%", height: 400 }}>
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                <BarChart data={chartData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+                                    <defs>
+                                        <linearGradient id="xpGradient" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="var(--primary)" stopOpacity={1}/>
+                                            <stop offset="95%" stopColor="var(--primary-dark)" stopOpacity={0.2}/>
+                                        </linearGradient>
+                                    </defs>
                                     <XAxis 
                                         dataKey="name" 
                                         stroke="var(--text-secondary)" 
-                                        tick={{ fill: 'var(--text-secondary)' }}
+                                        tick={{ fill: 'var(--text-secondary)', fontFamily: 'var(--font-heading)' }}
                                         tickLine={false}
                                         axisLine={false}
                                     />
                                     <YAxis 
                                         stroke="var(--text-secondary)" 
-                                        tick={{ fill: 'var(--text-secondary)' }}
+                                        tick={{ fill: 'var(--text-secondary)', fontFamily: 'var(--font-heading)' }}
                                         tickLine={false}
                                         axisLine={false}
                                         allowDecimals={false}
                                     />
                                     <Tooltip 
-                                        cursor={false} 
+                                        cursor={{fill: 'rgba(0, 217, 255, 0.05)'}} 
                                         contentStyle={{ 
-                                            backgroundColor: 'var(--bg-secondary)', 
-                                            border: '1px solid var(--border)', 
-                                            color: '#fff', 
-                                            borderRadius: '8px' 
+                                            backgroundColor: 'rgba(10, 15, 26, 0.9)', 
+                                            border: '1px solid var(--primary)', 
+                                            color: 'var(--primary)', 
+                                            borderRadius: '4px',
+                                            boxShadow: '0 0 15px rgba(0, 217, 255, 0.2)',
+                                            fontFamily: 'var(--font-heading)'
                                         }}
-                                        isAnimationActive={false} 
+                                        itemStyle={{ color: 'var(--primary)' }}
                                     />
                                     <Bar 
                                         dataKey="xp" 
-                                        fill="var(--primary)" 
+                                        fill="url(#xpGradient)" 
                                         radius={[4, 4, 0, 0]} 
                                         barSize={40} 
-                                        activeBar={false}
                                     />
                                 </BarChart>
                             </ResponsiveContainer>

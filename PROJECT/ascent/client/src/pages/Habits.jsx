@@ -20,6 +20,17 @@ function Habits() {
     // 2. ADD STATE TO TRACK WHICH HABIT WE ARE EDITING
     const [editingHabit, setEditingHabit] = useState(null);
 
+    // System Rank Converter
+    const getRankBadge = (difficulty) => {
+        if (!difficulty) return "E-Rank";
+        const diff = difficulty.toLowerCase();
+        if (diff === "easy") return "E-Rank";
+        if (diff === "medium") return "C-Rank";
+        if (diff === "hard") return "A-Rank";
+        if (diff === "elite") return "S-Rank";
+        return difficulty;
+    };
+
     useEffect(() => {
         fetchHabits();
     }, []);
@@ -95,10 +106,10 @@ function Habits() {
             <main className="dashboard-content">
                 <section className="command-center">
                     <h1 className="command-title">
-                        Habit <span style={{ color: "var(--primary)" }}>Repository</span>
+                        Quest <span style={{ color: "var(--primary)" }}>Log</span>
                     </h1>
                     <p className="command-description">
-                        Define and manage your recurring protocols. Daily tracking occurs on the unified dashboard.
+                        Define and manage your recurring System protocols. 
                     </p>
                 </section>
 
@@ -107,15 +118,15 @@ function Habits() {
                         
                         {searchQuery && (
                             <div style={{ marginBottom: "20px", color: "var(--text-secondary)" }}>
-                                <span>Displaying search results for: </span>
+                                <span>Displaying system search for: </span>
                                 <strong style={{ color: "var(--primary)" }}>"{searchQuery}"</strong>
                             </div>
                         )}
 
                         <div className="action-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-                            <h3>Active Protocols ({filteredHabits.length})</h3>
-                            <button className="btn-primary" onClick={openCreateModal} style={{ background: "var(--primary)", color: "#000", border: "none", padding: "8px 16px", borderRadius: "6px", fontWeight: "bold", cursor: "pointer" }}>
-                                + Initialize New Habit
+                            <h3 style={{fontFamily: "var(--font-heading)", fontSize: "1.5rem"}}>Active Quests ({filteredHabits.length})</h3>
+                            <button className="btn-primary" onClick={openCreateModal} style={{ background: "linear-gradient(135deg, var(--primary), var(--primary-dark))", color: "#000", border: "none", padding: "10px 20px", borderRadius: "6px", fontWeight: "800", cursor: "pointer", textTransform: "uppercase", letterSpacing: "1px", boxShadow: "0 0 15px rgba(0, 217, 255, 0.4)" }}>
+                                + Assign Quest
                             </button>
                         </div>
 
@@ -138,8 +149,8 @@ function Habits() {
                                                 <h4 style={{ margin: 0, fontSize: "1.1rem" }}>{habit.title || habit.name || "Untitled Protocol"}</h4>
                                                 
                                                 {habit.difficulty && (
-                                                    <span style={{ fontSize: "0.75rem", padding: "3px 8px", borderRadius: "12px", background: "rgba(0, 217, 255, 0.1)", color: "var(--primary)" }}>
-                                                        {habit.difficulty}
+                                                    <span className={`badge badge-${habit.difficulty.toLowerCase()}`} style={{ fontSize: "0.75rem", padding: "4px 10px", borderRadius: "4px", textTransform: "uppercase", letterSpacing: "1px", border: "1px solid currentColor" }}>
+                                                        {getRankBadge(habit.difficulty)}
                                                     </span>
                                                 )}
                                             </div>
