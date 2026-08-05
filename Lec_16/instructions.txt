@@ -1,0 +1,11 @@
+now create your project in react , express , mongo for databse 
+
+go and read documentation for react - viva based questioning 
+
+imp -> props , all hooks , components 
+
+dsa and web rounds -> 1 for logic and 1 for correct code 
+
+most imp -> host your website and when i will say give ypur hosted link in grps mention your name and project name and hostend link 
+
+dates -> 06 , 07 , 08 
