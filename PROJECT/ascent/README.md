@@ -2,7 +2,7 @@
 
 > **Live Deployment:** [https://ascent-frontend-xi.vercel.app](https://ascent-frontend-xi.vercel.app)
 
-Ascent is a full-stack MERN habit-tracking application featuring a sci-fi cyber-themed interface, designed for secure user authentication and disciplined daily habit management.
+Ascent is a gamified, full-stack MERN habit-tracking application featuring a sci-fi cyber-themed interface. It integrates RPG mechanics—such as XP progression, daily quests, and player ranks—with secure user authentication to enforce disciplined daily habit management.
 
 ## Technical Architecture
 
