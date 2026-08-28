@@ -134,3 +134,34 @@
 .mission-card.completed .difficulty {
     color: var(--text-secondary); 
 }
+
+/* =========================================
+   MOBILE RESPONSIVENESS OVERRIDES
+========================================= */
+
+@media (max-width: 768px) {
+    /* Prevents the header title and button from colliding */
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    /* Breaks the rigid horizontal row into a stacked column */
+    .mission-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    /* Takes full width to push the Rank and XP badges to the bottom right */
+    .mission-right {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+}

@@ -90,3 +90,29 @@
     color: var(--text-secondary);
     font-size: 14px;
 }
+
+.mobile-menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 18px;
+    transition: color 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    color: var(--text);
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    /* Hide the search box on mobile to prevent layout breakage */
+    .search-box {
+        display: none; 
+    }
+}

@@ -67,7 +67,7 @@ function Progress() {
                 </section>
 
                 {/* WIDGET 2: THE HISTORICAL VELOCITY GRAPH */}
-                <section className="panel" style={{ padding: "30px" }}>
+                <section className="panel" style={{ padding: "clamp(15px, 4vw, 30px)" }}>
                     <div className="section-header" style={{ marginBottom: "30px" }}>
                         <h2 style={{ color: "var(--text-primary)", margin: 0 }}>Ascension History (Last 7 Days)</h2>
                     </div>
@@ -75,7 +75,7 @@ function Progress() {
                     {loading ? (
                         <div style={{ color: "var(--text-secondary)" }}>Loading telemetry...</div>
                     ) : (
-                        <div style={{ width: "100%", height: 400 }}>
+                        <div style={{ width: "100%", height: 400, minWidth: 0 }}>
                             <ResponsiveContainer width="100%" height="100%">
                                 <BarChart data={chartData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
                                     <defs>
@@ -87,7 +87,7 @@ function Progress() {
                                     <XAxis 
                                         dataKey="name" 
                                         stroke="var(--text-secondary)" 
-                                        tick={{ fill: 'var(--text-secondary)', fontFamily: 'var(--font-heading)' }}
+                                        tick={{ fontSize:11, fill: 'var(--text-secondary)', fontFamily: 'var(--font-heading)' }}
                                         tickLine={false}
                                         axisLine={false}
                                     />
@@ -114,7 +114,7 @@ function Progress() {
                                         dataKey="xp" 
                                         fill="url(#xpGradient)" 
                                         radius={[4, 4, 0, 0]} 
-                                        barSize={40} 
+                                        maxBarSize={40} 
                                     />
                                 </BarChart>
                             </ResponsiveContainer>

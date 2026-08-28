@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaBell, FaMagnifyingGlass, FaUserAstronaut } from "react-icons/fa6";
+// Import FaBars for the hamburger menu
+import { FaBell, FaMagnifyingGlass, FaUserAstronaut, FaBars } from "react-icons/fa6"; 
 import { useUser } from "../../context/UserContext"; 
 
-function Topbar() {
+// Explicitly destructing the toggleSidebar prop
+function Topbar({ toggleSidebar }) { 
     const { user } = useUser();
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
@@ -18,15 +20,26 @@ function Topbar() {
     return (
         <header className="topbar">
             
-            <div className="search-box">
-                <FaMagnifyingGlass style={{ color: "var(--text-secondary)" }} />
-                <input
-                    type="text"
-                    placeholder="Search system protocols..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyDown={handleSearch} 
-                />
+            <div style={{ display: "flex", alignItems: "center" }}>
+                {/* Mobile Menu Trigger */}
+                <button 
+                    className="mobile-menu-btn" 
+                    onClick={toggleSidebar}
+                    aria-label="Toggle Sidebar"
+                >
+                    <FaBars />
+                </button>
+
+                <div className="search-box">
+                    <FaMagnifyingGlass style={{ color: "var(--text-secondary)" }} />
+                    <input
+                        type="text"
+                        placeholder="Search system protocols..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={handleSearch} 
+                    />
+                </div>
             </div>
 
             <div className="topbar-right">
@@ -52,7 +65,7 @@ function Topbar() {
                                 src={user.avatar} 
                                 alt="Operative" 
                                 style={{ width: "100%", height: "100%", objectFit: "cover" }} 
-                                onError={(e) => { e.target.style.display='none'; }} // Failsafe if URL is broken
+                                onError={(e) => { e.target.style.display='none'; }} 
                             />
                         ) : (
                             <FaUserAstronaut size={20} color="var(--primary)" />

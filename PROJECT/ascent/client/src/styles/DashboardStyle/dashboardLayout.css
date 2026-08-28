@@ -250,3 +250,97 @@
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+@media (max-width: 768px) {
+    .dashboard-main {
+        margin-left: 0; /* Reclaims the 230px space for mobile */
+    }
+    
+    .dashboard-content {
+        padding: 16px;
+        padding-top: 24px; /* Reduced top padding since navbar changes */
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* Stacks the top section */
+        gap: 24px;
+    }
+    
+    .bento-grid {
+        grid-template-columns: 1fr; /* Prevents the 380px column from breaking the viewport */
+    }
+
+    .modal-content {
+        margin: 16px;
+        max-width: calc(100% - 32px);
+    }
+}
+
+/* MOBILE NAVIGATION OVERRIDES */
+.mobile-topbar {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9998;
+    backdrop-filter: blur(20px);
+}
+
+.mobile-logo {
+    color: var(--primary);
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.hamburger-btn {
+    background: transparent;
+    color: var(--text);
+    font-size: 24px;
+    border: none;
+    padding: 8px;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-topbar {
+        display: flex; /* Exposes the topbar on mobile */
+    }
+    
+    .sidebar-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 9999;
+        pointer-events: none; /* Lets clicks pass through to the dashboard when closed */
+    }
+
+    .sidebar-wrapper.is-open {
+        pointer-events: auto; /* Re-enables clicks when open */
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 9998;
+    }
+
+    .dashboard-content {
+        padding: 16px;
+        /* The navbar is roughly 60-70px tall. You must clear it. */
+        padding-top: 85px; 
+    }
+}

@@ -1,5 +1,5 @@
 import { useUser } from "../../context/UserContext";
-import "../../styles/DashboardStyle/stats.css"; // Ensure your CSS import remains intact
+import "../../styles/DashboardStyle/stats.css";
 
 function ProgressPanel() {
     const { user, currentLevelBaseXp, nextLevelXp } = useUser();
@@ -13,7 +13,7 @@ function ProgressPanel() {
     const xpNeededThisLevel = nextXP - baseXP;
     const xpGainedThisLevel = currentXP - baseXP;
 
-    // 3. THE FIX: Math.round() forces a clean integer for the UI
+    // 3. Math.round() forces a clean integer for the UI
     const progressPercentage = xpNeededThisLevel > 0 
         ? Math.round(Math.min(100, Math.max(0, (xpGainedThisLevel / xpNeededThisLevel) * 100)))
         : 100;
@@ -24,13 +24,15 @@ function ProgressPanel() {
     const strokeDashoffset = circumference - (progressPercentage / 100) * circumference;
 
     return (
-        <div className="panel" style={{ padding: "30px", display: "flex", flexDirection: "column", height: "100%", background: "rgba(10, 15, 26, 0.6)" }}>
+        /* FIX 1: Fluid panel padding using clamp() */
+        <div className="panel" style={{ padding: "clamp(15px, 4vw, 30px)", display: "flex", flexDirection: "column", height: "100%", background: "rgba(10, 15, 26, 0.6)" }}>
             <h2 style={{ color: "var(--text-primary)", textAlign: "center", marginBottom: "20px", fontFamily: "var(--font-heading)", textTransform: "uppercase", letterSpacing: "2px" }}>
                 Player <span style={{ color: "var(--primary)" }}>Status</span>
             </h2>
             
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flex: 1, position: "relative", margin: "20px 0" }}>
-                <svg width="150" height="150" viewBox="0 0 150 150" style={{ filter: "drop-shadow(0 0 12px rgba(0, 217, 255, 0.4))" }}>
+                {/* FIX 2: Replaced hardcoded width/height with fluid viewBox constraints */}
+                <svg viewBox="0 0 150 150" style={{ width: "100%", maxWidth: "150px", filter: "drop-shadow(0 0 12px rgba(0, 217, 255, 0.4))" }}>
                     {/* Background track */}
                     <circle 
                         cx="75" cy="75" r={radius} 
@@ -56,11 +58,12 @@ function ProgressPanel() {
             </div>
 
             <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", padding: "12px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                {/* FIX 3: Fluid padding on stat boxes to prevent internal text clipping */}
+                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", padding: "clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px)", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
                     <span style={{ color: "var(--text-secondary)", textTransform: "uppercase", fontSize: "0.85rem", letterSpacing: "1px" }}>Total XP</span>
                     <span className="stat-number" style={{ fontSize: "1.1rem" }}>{currentXP}</span>
                 </div>
-                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", padding: "12px 20px", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", background: "rgba(255,255,255,0.03)", padding: "clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px)", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.05)" }}>
                     <span style={{ color: "var(--text-secondary)", textTransform: "uppercase", fontSize: "0.85rem", letterSpacing: "1px" }}>Current Level</span>
                     <span className="stat-number" style={{ fontSize: "1.1rem" }}>{user?.level || 1}</span>
                 </div>
