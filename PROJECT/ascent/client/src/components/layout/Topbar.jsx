@@ -28,7 +28,11 @@ function Topbar({ toggleSidebar }) {
                     <FaBars />
                 </button>
 
-                {/* The search box will be hidden via CSS on mobile */}
+                {/* The Mobile Logo restored */}
+                <div className="mobile-logo" style={{ color: "var(--primary)", fontFamily: "var(--font-heading)", fontSize: "18px", fontWeight: "700", letterSpacing: "2px" }}>
+                    ASCENT OS
+                </div>
+
                 <div className="search-box">
                     <FaMagnifyingGlass style={{ color: "var(--text-secondary)" }} />
                     <input
@@ -72,7 +76,6 @@ function Topbar({ toggleSidebar }) {
                         )}
                     </div>
 
-                    {/* Added a targetable class to hide text on mobile */}
                     <div className="profile-info" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
                         <h4 style={{ margin: 0, fontFamily: "var(--font-heading)", letterSpacing: "1px", fontSize: "14px" }}>{user?.username || "Ascender"}</h4>
                         <p style={{ margin: 0, color: "var(--primary)", fontSize: "12px" }}>Rank {user?.rank || "E"}</p>

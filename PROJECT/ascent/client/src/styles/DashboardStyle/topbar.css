@@ -107,25 +107,34 @@
 }
 
 @media (max-width: 768px) {
-    .topbar {
+ .topbar {
+        position: fixed !important;
+        top: 0;
+        left: 0;
         width: 100% !important;
-        max-width: 100%;
-        padding: 12px 16px;
+        padding: 12px 16px !important;
         box-sizing: border-box;
-        overflow: hidden;
+        background: var(--surface) !important;
+        border-bottom: 1px solid var(--border) !important;
+        z-index: 9998 !important;
+        backdrop-filter: blur(20px) !important;
     }
 
-    /* Hide horizontal space hogs */
+    /* Expose the mobile elements */
+    .mobile-logo {
+        display: block !important;
+    }
+
+    .mobile-menu-btn {
+        display: block !important;
+    }
+
+    /* Hide the horizontal space hogs */
     .search-box {
-        display: none ;
+        display: none !important;
     }
 
     .profile-info {
-        display: none ;
-    }
-
-    /* Override mobile-menu-btn if it was hidden previously */
-    .mobile-menu-btn {
-        display: block ;
+        display: none !important;
     }
 }
