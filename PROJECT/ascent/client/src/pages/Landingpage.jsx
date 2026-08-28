@@ -41,16 +41,15 @@ function Landingpage() {
                 textAlign: "center",
                 padding: "0 2rem"
             }}>
+                
                 <h1 style={{ 
-                    fontSize: "5rem", 
+                    /* clamp(MIN_SIZE, PREFERRED_VIEWPORT_WIDTH, MAX_SIZE) */
+                    fontSize: "clamp(2.5rem, 10vw, 5rem)", 
                     textTransform: "uppercase", 
                     textShadow: "0 0 20px rgba(0, 255, 255, 0.5)",
                     marginBottom: "1rem",
-                    letterSpacing: "4px"
-                }}>
-                    Track. Rise. Repeat.
-                </h1>
-                
+                    letterSpacing: "2px" /* Reduced tracking for mobile */
+                }}></h1>
                 <p style={{ 
                     fontSize: "1.4rem", 
                     color: "rgba(255, 255, 255, 0.7)", 

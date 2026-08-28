@@ -295,3 +295,14 @@
     }
 
 }
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 30px 20px; /* Reduces horizontal padding */
+        width: 90%; /* Forces it to respect margins */
+        margin: 0 auto;
+    }
+    .logo {
+        font-size: clamp(30px, 10vw, 60px);
+        letter-spacing: 4px;
+    }
+}

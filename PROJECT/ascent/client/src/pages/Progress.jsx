@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import API from "../api/api"; 
 import MainLayout from "../components/layout/MainLayout";
-// TODO: Import your actual context here to get the user and XP boundaries
 import { useUser } from "../context/UserContext"; 
 
 function Progress() {
@@ -27,20 +26,19 @@ function Progress() {
         }
     };
 
-    // 2. Safely calculate the absolute XP math for the progress bar
     const xpNeededThisLevel = (nextLevelXp || 100) - (currentLevelBaseXp || 0);
     const xpGainedThisLevel = (user?.xp || 0) - (currentLevelBaseXp || 0);
     const progressPercentage = xpNeededThisLevel > 0 
     ? Math.min(100, Math.max(0, (xpGainedThisLevel / xpNeededThisLevel) * 100))
-    : 100; // Cap at 100% if the level max is reached
+    : 100; 
 
     return (
         <MainLayout>
-            {/* Added flex layout to stack the widgets cleanly */}
             <main className="dashboard-content" style={{ display: "flex", flexDirection: "column", gap: "20px" }}> 
                 
                 {/* WIDGET 1: THE XP PROGRESS BAR */}
-                <section className="panel" style={{ padding: "30px" }}>
+                {/* FIX 1: Fluid padding applied here */}
+                <section className="panel" style={{ padding: "clamp(15px, 4vw, 30px)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
                         <h2 style={{ margin: 0, color: "var(--text-primary)", fontFamily: "var(--font-heading)", textTransform: "uppercase", letterSpacing: "2px" }}>System Awakening</h2>
                         <div style={{ textAlign: "right" }}>
@@ -67,6 +65,7 @@ function Progress() {
                 </section>
 
                 {/* WIDGET 2: THE HISTORICAL VELOCITY GRAPH */}
+                {/* FIX 1: Fluid padding applied here */}
                 <section className="panel" style={{ padding: "clamp(15px, 4vw, 30px)" }}>
                     <div className="section-header" style={{ marginBottom: "30px" }}>
                         <h2 style={{ color: "var(--text-primary)", margin: 0 }}>Ascension History (Last 7 Days)</h2>
@@ -75,19 +74,22 @@ function Progress() {
                     {loading ? (
                         <div style={{ color: "var(--text-secondary)" }}>Loading telemetry...</div>
                     ) : (
+                        /* FIX 2: minWidth: 0 added to prevent flexbox from forcing horizontal overflow */
                         <div style={{ width: "100%", height: 400, minWidth: 0 }}>
                             <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={chartData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+                                {/* FIX: Adjusted left margin to -30 to center the chart properly */}
+                                <BarChart data={chartData} margin={{ top: 20, right: 10, left: -30, bottom: 0 }}>
                                     <defs>
                                         <linearGradient id="xpGradient" x1="0" y1="0" x2="0" y2="1">
                                             <stop offset="5%" stopColor="var(--primary)" stopOpacity={1}/>
                                             <stop offset="95%" stopColor="var(--primary-dark)" stopOpacity={0.2}/>
                                         </linearGradient>
                                     </defs>
+                                    {/* FIX 3: Added fontSize: 11 to the tick styling */}
                                     <XAxis 
                                         dataKey="name" 
                                         stroke="var(--text-secondary)" 
-                                        tick={{ fontSize:11, fill: 'var(--text-secondary)', fontFamily: 'var(--font-heading)' }}
+                                        tick={{ fontSize: 11, fill: 'var(--text-secondary)', fontFamily: 'var(--font-heading)' }}
                                         tickLine={false}
                                         axisLine={false}
                                     />
@@ -110,6 +112,7 @@ function Progress() {
                                         }}
                                         itemStyle={{ color: 'var(--primary)' }}
                                     />
+                                    {/* FIX 4: Replaced barSize={40} with maxBarSize={40} here */}
                                     <Bar 
                                         dataKey="xp" 
                                         fill="url(#xpGradient)" 
