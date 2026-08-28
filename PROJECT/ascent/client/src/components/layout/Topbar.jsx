@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// Import FaBars for the hamburger menu
 import { FaBell, FaMagnifyingGlass, FaUserAstronaut, FaBars } from "react-icons/fa6"; 
 import { useUser } from "../../context/UserContext"; 
 
-// Explicitly destructing the toggleSidebar prop
 function Topbar({ toggleSidebar }) { 
     const { user } = useUser();
     const navigate = useNavigate();
@@ -20,16 +18,17 @@ function Topbar({ toggleSidebar }) {
     return (
         <header className="topbar">
             
-            <div style={{ display: "flex", alignItems: "center" }}>
-                {/* Mobile Menu Trigger */}
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 <button 
                     className="mobile-menu-btn" 
                     onClick={toggleSidebar}
                     aria-label="Toggle Sidebar"
+                    style={{ background: "transparent", border: "none", color: "var(--primary)", fontSize: "24px", cursor: "pointer" }}
                 >
                     <FaBars />
                 </button>
 
+                {/* The search box will be hidden via CSS on mobile */}
                 <div className="search-box">
                     <FaMagnifyingGlass style={{ color: "var(--text-secondary)" }} />
                     <input
@@ -42,13 +41,13 @@ function Topbar({ toggleSidebar }) {
                 </div>
             </div>
 
-            <div className="topbar-right">
+            <div className="topbar-right" style={{ display: "flex", alignItems: "center", gap: "16px" }}>
                 
-                <button className="notification-btn">
+                <button className="notification-btn" style={{ background: "transparent", border: "none", color: "var(--text-secondary)", fontSize: "20px", cursor: "pointer" }}>
                     <FaBell />
                 </button>
 
-                <div className="profile-box">
+                <div className="profile-box" style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                     <div className="profile-avatar" style={{ 
                         width: "40px", 
                         height: "40px", 
@@ -58,7 +57,8 @@ function Topbar({ toggleSidebar }) {
                         border: "1px solid var(--primary)",
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
+                        flexShrink: 0
                     }}>
                         {user?.avatar ? (
                             <img 
@@ -72,12 +72,12 @@ function Topbar({ toggleSidebar }) {
                         )}
                     </div>
 
-                    <div>
-                        <h4 style={{ fontFamily: "var(--font-heading)", letterSpacing: "1px" }}>{user?.username || "Ascender"}</h4>
-                        <p style={{ color: "var(--primary)" }}>Rank {user?.rank || "E"}</p>
+                    {/* Added a targetable class to hide text on mobile */}
+                    <div className="profile-info" style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                        <h4 style={{ margin: 0, fontFamily: "var(--font-heading)", letterSpacing: "1px", fontSize: "14px" }}>{user?.username || "Ascender"}</h4>
+                        <p style={{ margin: 0, color: "var(--primary)", fontSize: "12px" }}>Rank {user?.rank || "E"}</p>
                     </div>
                 </div>
-
             </div>
             
         </header>

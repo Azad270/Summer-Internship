@@ -92,6 +92,9 @@ function Progress() {
                                         tick={{ fontSize: 11, fill: 'var(--text-secondary)', fontFamily: 'var(--font-heading)' }}
                                         tickLine={false}
                                         axisLine={false}
+                                        angle={-35} 
+                                        textAnchor="end" 
+                                        height={50}
                                     />
                                     <YAxis 
                                         stroke="var(--text-secondary)" 

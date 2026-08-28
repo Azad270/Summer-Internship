@@ -107,12 +107,25 @@
 }
 
 @media (max-width: 768px) {
-    .mobile-menu-btn {
-        display: block;
+    .topbar {
+        width: 100% !important;
+        max-width: 100%;
+        padding: 12px 16px;
+        box-sizing: border-box;
+        overflow: hidden;
     }
-    
-    /* Hide the search box on mobile to prevent layout breakage */
+
+    /* Hide horizontal space hogs */
     .search-box {
-        display: none; 
+        display: none ;
+    }
+
+    .profile-info {
+        display: none ;
+    }
+
+    /* Override mobile-menu-btn if it was hidden previously */
+    .mobile-menu-btn {
+        display: block ;
     }
 }
