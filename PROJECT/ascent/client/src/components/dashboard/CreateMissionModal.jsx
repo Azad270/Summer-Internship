@@ -59,13 +59,7 @@ function CreateMissionModal({ isOpen, onClose, onSubmit, initialData }) {
                     <div className="input-group" style={{ flexDirection: "row", gap: "20px" }}>
                         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
                             <label>XP Reward</label>
-                            <input 
-                                type="number" 
-                                required 
-                                min="1" 
-                                value={xp} 
-                                onChange={(e) => setXp(e.target.value)} 
-                            />
+                            <div style={{ padding: "10px", color: "var(--text-secondary)" }}>Set by difficulty</div>
                         </div>
                         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
                             <label>Difficulty</label>

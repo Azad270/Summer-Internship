@@ -63,13 +63,7 @@ function CreateHabitModal({ isOpen, onClose, onSubmit, initialData }) {
                     <div style={{ display: "flex", gap: "15px" }}>
                         <div style={{ display: "flex", flexDirection: "column", gap: "5px", flex: 1 }}>
                             <label style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>XP REWARD</label>
-                            <input 
-                                required 
-                                type="number" 
-                                value={xp} 
-                                onChange={(e) => setXp(e.target.value)} 
-                                style={{ padding: "10px", background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "var(--text)", borderRadius: "4px" }}
-                            />
+                            <div style={{ padding: "10px", color: "var(--text-secondary)" }}>Set by difficulty</div>
                         </div>
 
                         <div style={{ display: "flex", flexDirection: "column", gap: "5px", flex: 1 }}>
