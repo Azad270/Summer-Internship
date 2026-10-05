@@ -15,6 +15,30 @@ const registerUser = async (req, res) => {
             });
         }
 
+        // Validate email format
+        const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (typeof email !== "string" || !EMAIL_REGEX.test(email.trim())) {
+            return res.status(400).json({
+                success: false,
+                message: "Please enter a valid email address",
+            });
+        }
+
+        // Validate password length
+        if (typeof password !== "string" || password.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: "Password must be at least 6 characters",
+            });
+        }
+
+        if (Buffer.byteLength(password, "utf8") > 72) {
+            return res.status(400).json({
+                success: false,
+                message: "Password cannot exceed 72 bytes",
+            });
+        }
+
         // Check if email already exists
         const existingUser = await User.findOne({ email });
 

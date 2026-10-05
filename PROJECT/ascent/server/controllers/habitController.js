@@ -87,7 +87,7 @@ const toggleHabit = async (req, res) => {
         const habitId = req.params.id;
         const userId = req.user.id; 
 
-        const habit = await Habit.findById(habitId);
+        const habit = await Habit.findOne({ _id: habitId, user: userId });
         let user = await User.findById(userId);
 
         if (!habit || !user) {
